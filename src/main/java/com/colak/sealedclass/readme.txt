@@ -1,0 +1,2 @@
+- A class that extends a sealed class must be in the same package that permits it, and it must be marked as final.
+- A class that extends a sealed class and intends to permit further extension must use the non-sealed keyword.
