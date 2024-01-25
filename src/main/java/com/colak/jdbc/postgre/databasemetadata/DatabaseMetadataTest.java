@@ -6,7 +6,9 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 @Slf4j
 public class DatabaseMetadataTest {
@@ -17,6 +19,7 @@ public class DatabaseMetadataTest {
         String password = "postgres";
 
         try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
+
             DatabaseMetaData metaData = connection.getMetaData();
 
             // Specify the table name for which you want to retrieve metadata
@@ -102,5 +105,22 @@ public class DatabaseMetadataTest {
                 log.info("----------");
             }
         }
+    }
+
+    private static void selectFromTable(Connection connection, String tableName) throws SQLException {
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("select * from " + tableName)) {
+
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            while (resultSet.next()) {
+                for (int index = 1; index <= columnCount; index++) {
+                    Object object = resultSet.getObject(index);
+                    log.info(object.toString());
+                }
+            }
+        }
+
     }
 }
