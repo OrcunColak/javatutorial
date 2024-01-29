@@ -25,63 +25,64 @@ public class DatabaseMetadataTest {
             // Specify the table name for which you want to retrieve metadata
 
             String tableName = "all_char_types_table";
-            log.info("---------- {} ----------", tableName);
+            String tableSeparator = "---------- {} ----------";
+            log.info(tableSeparator, tableName);
             printTable(metaData, tableName);
 
             tableName = "all_numeric_types_table";
-            log.info("---------- {} ----------", tableName);
+            log.info(tableSeparator, tableName);
             printTable(metaData, tableName);
 
             tableName = "datetime_types_table";
-            log.info("---------- {} ----------", tableName);
+            log.info(tableSeparator, tableName);
             printTable(metaData, tableName);
 
             tableName = "binary_types_table";
-            log.info("---------- {} ----------", tableName);
+            log.info(tableSeparator, tableName);
             printTable(metaData, tableName);
 
             tableName = "boolean_types_table";
-            log.info("---------- {} ----------", tableName);
+            log.info(tableSeparator, tableName);
             printTable(metaData, tableName);
 
             tableName = "person_mood";
-            log.info("---------- {} ----------", tableName);
+            log.info(tableSeparator, tableName);
             printTable(metaData, tableName);
 
             tableName = "bit_types_table";
-            log.info("---------- {} ----------", tableName);
+            log.info(tableSeparator, tableName);
             printTable(metaData, tableName);
 
             tableName = "uuid_types_table";
-            log.info("---------- {} ----------", tableName);
+            log.info(tableSeparator, tableName);
             printTable(metaData, tableName);
 
             tableName = "inet_types_table";
-            log.info("---------- {} ----------", tableName);
+            log.info(tableSeparator, tableName);
             printTable(metaData, tableName);
 
             tableName = "cidr_types_table";
-            log.info("---------- {} ----------", tableName);
+            log.info(tableSeparator, tableName);
             printTable(metaData, tableName);
 
             tableName = "json_types_table";
-            log.info("---------- {} ----------", tableName);
+            log.info(tableSeparator, tableName);
             printTable(metaData, tableName);
 
             tableName = "xml_types_table";
-            log.info("---------- {} ----------", tableName);
+            log.info(tableSeparator, tableName);
             printTable(metaData, tableName);
 
             tableName = "geometric_types_table";
-            log.info("---------- {} ----------", tableName);
+            log.info(tableSeparator, tableName);
             printTable(metaData, tableName);
 
             tableName = "array_types_table";
-            log.info("---------- {} ----------", tableName);
+            log.info(tableSeparator, tableName);
             printTable(metaData, tableName);
 
             tableName = "ranges_table";
-            log.info("---------- {} ----------", tableName);
+            log.info(tableSeparator, tableName);
             printTable(metaData, tableName);
 
         } catch (Exception exception) {
