@@ -1,18 +1,19 @@
 package com.colak.mock_with_proxy;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.List;
 
-import static com.colak.mock_with_proxy.Mocker.when;
-
+@Slf4j
 public class MockerTest {
 
     public static void main(String[] args) {
         ItemService userServiceMock = Mocker.createMock(ItemService.class);
 
-        when(userServiceMock.fetch(1))
+        Mocker.when(userServiceMock.fetch(1))
                 .thenReturn(new Item("An item returned from mocked service"));
 
-        when(userServiceMock.fetchAll())
+        Mocker.when(userServiceMock.fetchAll())
                 .thenReturn(List.of(
                         new Item("Item 1"),
                         new Item("Item 2")
@@ -21,10 +22,10 @@ public class MockerTest {
         Controller controller = new Controller(userServiceMock);
 
         Item item = controller.fetch(1);
-        System.out.println("A mocked item: " + item);
+        log.info("A mocked item: {}", item);
 
 
         List<Item> items = controller.fetchAll();
-        System.out.println("Mocked items: " + items);
+        log.info("Mocked items: {}", items);
     }
 }
