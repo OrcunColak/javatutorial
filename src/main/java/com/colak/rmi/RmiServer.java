@@ -10,7 +10,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 @Slf4j
-public class RmiServer {
+class RmiServer {
     public void start() {
         try {
             CalculatorService calculatorService = new CalculatorServiceImpl();
