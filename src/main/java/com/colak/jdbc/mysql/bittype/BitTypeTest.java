@@ -51,7 +51,7 @@ public class BitTypeTest {
     }
 
     private static void insertOneBit(Connection connection) throws SQLException {
-        String insertQuery = "INSERT INTO bit_types_table (bit_column) VALUES (?)";
+        String insertQuery = "INSERT INTO " + TABLE_NAME + " (bit_column) VALUES (?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
 
             // Setting the value for the bit_column
@@ -69,7 +69,7 @@ public class BitTypeTest {
     }
 
     private static void selectOneBit(Connection connection) throws SQLException {
-        String insertQuery = "SELECT * FROM bit_types_table";
+        String insertQuery = "SELECT * FROM " + TABLE_NAME;
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
              ResultSet resultSet = preparedStatement.executeQuery();) {
 
@@ -84,7 +84,7 @@ public class BitTypeTest {
     private static void insertBitString(Connection connection) throws SQLException {
         // https://stackoverflow.com/questions/1601838/jdbc-mysql-getting-bits-into-a-bitm-1-column
         // Special (b?) syntax
-        String insertQuery = "INSERT INTO bit_types_table (bit_column) VALUES (b?)";
+        String insertQuery = "INSERT INTO " + TABLE_NAME + " (bit_column) VALUES (b?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
 
             // Setting the value for the bit_column
@@ -102,7 +102,7 @@ public class BitTypeTest {
     }
 
     private static void selectBitString(Connection connection) throws SQLException {
-        String insertQuery = "SELECT * FROM bit_types_table";
+        String insertQuery = "SELECT * FROM " + TABLE_NAME;
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
              ResultSet resultSet = preparedStatement.executeQuery();) {
 
@@ -115,9 +115,9 @@ public class BitTypeTest {
     }
 
     private static void insertBlob(Connection connection) throws SQLException {
-        //https://stackoverflow.com/questions/48207525/mysql-jdbc-inserting-true-value-to-a-bit-column-becomes-false
+        // https://stackoverflow.com/questions/48207525/mysql-jdbc-inserting-true-value-to-a-bit-column-becomes-false
 
-        String insertQuery = "INSERT INTO bit_types_table (bit_column) VALUES (?)";
+        String insertQuery = "INSERT INTO " + TABLE_NAME + " (bit_column) VALUES (?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
 
             byte[] bytes = "111000".getBytes(StandardCharsets.UTF_8);
@@ -138,7 +138,7 @@ public class BitTypeTest {
     }
 
     private static void selectBlob(Connection connection) throws SQLException {
-        String insertQuery = "SELECT * FROM bit_types_table";
+        String insertQuery = "SELECT * FROM " + TABLE_NAME;
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
              ResultSet resultSet = preparedStatement.executeQuery();) {
 
