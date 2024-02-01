@@ -43,29 +43,6 @@ public class BigIntUnsignedTypeTest {
         }
     }
 
-    /**
-     * This does not work. Error is "Data truncation: Out of range value for column 'bigint_unsigned' at row 1"
-     */
-    private static void insertMaxAsObject(Connection connection) throws SQLException {
-        String insertQuery = "INSERT INTO " + TABLE_NAME + " (bigint_unsigned) VALUES (?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-
-            //
-            BigInteger bigInteger = new BigInteger("18446744073709551615");
-            preparedStatement.setObject(1, bigInteger);
-
-            // Executing the INSERT operation
-            int rowsAffected = preparedStatement.executeUpdate();
-
-            if (rowsAffected > 0) {
-                log.info("Insert successful!");
-            } else {
-                log.info("Insert failed.");
-            }
-        }
-    }
-
-
     private static void insertMaxAsBigDecimal(Connection connection) throws SQLException {
         String insertQuery = "INSERT INTO " + TABLE_NAME + " (bigint_unsigned) VALUES (?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
@@ -95,6 +72,35 @@ public class BigIntUnsignedTypeTest {
             log.info("bigint_unsigned: " + bigDecimal);
         }
     }
+
+    /**
+     * This does not work. Error is "Data truncation: Out of range value for column 'bigint_unsigned' at row 1"
+     * Works :
+     * INSERT into integer_types_table(bigint_unsigned) values (18446744073709551615)
+     * Does not works
+     * INSERT into integer_types_table(bigint_unsigned) values (18446744073709551616)
+     * Same error
+     * Data truncation: Out of range value for column 'bigint_unsigned' at row 1
+     */
+    private static void insertMaxAsObject(Connection connection) throws SQLException {
+        String insertQuery = "INSERT INTO " + TABLE_NAME + " (bigint_unsigned) VALUES (?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+
+            //
+            BigInteger bigInteger = new BigInteger("18446744073709551615");
+            preparedStatement.setObject(1, bigInteger);
+
+            // Executing the INSERT operation
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                log.info("Insert successful!");
+            } else {
+                log.info("Insert failed.");
+            }
+        }
+    }
+
 
     /**
      * This works and returns BigInteger and it is documented
