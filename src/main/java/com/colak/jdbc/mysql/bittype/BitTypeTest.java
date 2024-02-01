@@ -76,7 +76,6 @@ public class BitTypeTest {
             resultSet.next();
             boolean bitColumnValue = resultSet.getBoolean("bit_column");
 
-            // Do something with the retrieved values
             log.info("bit_column: " + bitColumnValue);
         }
     }
@@ -109,7 +108,6 @@ public class BitTypeTest {
             resultSet.next();
             String bitColumnValue = resultSet.getString("bit_column");
 
-            // Do something with the retrieved values
             log.info("bit_column: " + bitColumnValue);
         }
     }
@@ -146,7 +144,6 @@ public class BitTypeTest {
             byte[] bytes = resultSet.getBytes("bit_column");
 
             String string = new String(bytes, StandardCharsets.UTF_8);
-            // Do something with the retrieved values
             log.info("bit_column: " + string);
         }
     }

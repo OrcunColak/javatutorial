@@ -92,13 +92,13 @@ public class BigIntUnsignedTypeTest {
             resultSet.next();
             BigDecimal bigDecimal = resultSet.getBigDecimal("bigint_unsigned");
 
-            // Do something with the retrieved values
             log.info("bigint_unsigned: " + bigDecimal);
         }
     }
 
     /**
-     * This works but probably not standard behavior
+     * This works and returns BigInteger and it is documented
+     * https://dev.mysql.com/doc/connector-j/en/connector-j-reference-type-conversions.html
      */
     private static void selectMaxAsObject(Connection connection) throws SQLException {
         String insertQuery = "SELECT * FROM " + TABLE_NAME;
@@ -108,7 +108,6 @@ public class BigIntUnsignedTypeTest {
             resultSet.next();
             BigInteger bigInteger = (BigInteger) resultSet.getObject("bigint_unsigned");
 
-            // Do something with the retrieved values
             log.info("bigint_unsigned: " + bigInteger);
         }
     }
