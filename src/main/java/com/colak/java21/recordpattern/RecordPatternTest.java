@@ -24,7 +24,7 @@ public class RecordPatternTest {
 
         recordPattern(obj);
         nestedRecordPattern(windowFrame);
-
+        unnamedRecordPattern(windowFrame);
     }
 
     private static void recordPattern(Object obj) {
@@ -38,6 +38,13 @@ public class RecordPatternTest {
         if (obj instanceof WindowFrame(Point origin, Size(int width, int height))) {
             // Access width and height directly, code is more concise
             log.info("width : {}, height : {}", width, height);
+        }
+    }
+
+    private static void unnamedRecordPattern(Object obj) {
+        if (obj instanceof WindowFrame(_, Size(_, int height))) {
+            // The pattern focuses solely on the height, ignoring other components
+            log.info("height : {}", height);
         }
     }
 }
