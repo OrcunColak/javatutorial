@@ -1,4 +1,4 @@
-package com.colak.stringtemplate;
+package com.colak.java21.stringtemplate;
 
 import lombok.extern.slf4j.Slf4j;
 

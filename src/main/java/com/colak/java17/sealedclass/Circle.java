@@ -1,4 +1,4 @@
-package com.colak.sealedclass;
+package com.colak.java17.sealedclass;
 
 import lombok.extern.slf4j.Slf4j;
 

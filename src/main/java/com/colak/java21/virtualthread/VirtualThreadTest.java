@@ -1,4 +1,4 @@
-package com.colak.virtualthread;
+package com.colak.java21.virtualthread;
 
 import lombok.extern.slf4j.Slf4j;
 
