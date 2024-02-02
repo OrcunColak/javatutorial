@@ -1,4 +1,4 @@
-package com.colak.mock_with_proxy;
+package com.colak.proxy.mock_with_proxy;
 
 import lombok.extern.slf4j.Slf4j;
 

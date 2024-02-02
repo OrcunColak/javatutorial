@@ -1,4 +1,4 @@
-package com.colak.mock_with_proxy;
+package com.colak.proxy.mock_with_proxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

@@ -1,4 +1,4 @@
-package com.colak.proxy;
+package com.colak.proxy.simple;
 
 public class ProductServiceImpl implements ProductService {
 

@@ -1,4 +1,4 @@
-package com.colak.proxy;
+package com.colak.proxy.simple;
 
 import lombok.extern.slf4j.Slf4j;
 
