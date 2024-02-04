@@ -1,4 +1,4 @@
-package com.colak.socket;
+package com.colak.network.socket;
 
 import lombok.AllArgsConstructor;
 import lombok.ToString;
