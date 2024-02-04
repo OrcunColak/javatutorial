@@ -104,7 +104,7 @@ public class BigIntUnsignedTypeTest {
 
     /**
      * This works and returns BigInteger and it is documented
-     * https://dev.mysql.com/doc/connector-j/en/connector-j-reference-type-conversions.html
+     * <a href="https://dev.mysql.com/doc/connector-j/en/connector-j-reference-type-conversions.html">...</a>
      */
     private static void selectMaxAsObject(Connection connection) throws SQLException {
         String insertQuery = "SELECT * FROM " + TABLE_NAME;
