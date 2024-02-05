@@ -1,4 +1,4 @@
-package com.colak.httpclient;
+package com.colak.java11.httpclient;
 
 import lombok.extern.slf4j.Slf4j;
 
