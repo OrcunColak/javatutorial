@@ -28,6 +28,7 @@ public class HttpClientTest {
         httpClientTest.getAsyncExample();
         httpClientTest.getWithConnectionTimeoutExample();
         httpClientTest.getWithRequestTimeoutExample();
+        httpClientTest.headExample();
     }
 
 
@@ -84,6 +85,18 @@ public class HttpClientTest {
                     .header("Accept", "application/json")
                     .timeout(Duration.ofSeconds(10))
                     .GET()
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            log.info("Response Code: {}", response.statusCode());
+            log.info("Response Body: {}", response.body());
+        }
+    }
+
+    private void headExample() throws IOException, InterruptedException {
+        try (HttpClient client = HttpClient.newHttpClient()) {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://www.google.com/"))
+                    .HEAD()
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             log.info("Response Code: {}", response.statusCode());
