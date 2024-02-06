@@ -31,6 +31,10 @@ public class DatabaseMetadataTest {
             log.info(tableSeparator, tableName);
             printTable(metaData, tableName);
 
+            tableName = "datetime_types_table";
+            log.info(tableSeparator, tableName);
+            printTable(metaData, tableName);
+
 
         } catch (Exception exception) {
             log.error("Exception ", exception);
