@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Slf4j
 public class DateTimeTypeTest {
@@ -46,10 +46,10 @@ public class DateTimeTypeTest {
 
             // The datetime2_column has accuracy of 3.33 milliseconds
             // So it will lose 456_789 part
-            Instant instantWithNanos = Instant.ofEpochSecond(1644168065, 333_123_456);
+            LocalDateTime localDateTime = LocalDateTime.of(2022, 2, 6, 13, 1, 5, 333_123_456);
 
             // Convert Instant to Timestamp
-            Timestamp timestamp = Timestamp.from(instantWithNanos);
+            Timestamp timestamp = Timestamp.valueOf(localDateTime);
 
             preparedStatement.setTimestamp(1, timestamp);
 
@@ -72,7 +72,7 @@ public class DateTimeTypeTest {
             resultSet.next();
             Timestamp value = resultSet.getTimestamp("datetime_column");
 
-            // 22022-02-06 20:21:05.333
+            // 2022-02-06 13:01:05.333
             log.info("datetime_column: " + value);
         }
     }
