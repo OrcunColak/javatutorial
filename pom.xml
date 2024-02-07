@@ -19,7 +19,10 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <release>21</release>
-                    <compilerArgs>--enable-preview</compilerArgs>
+                    <compilerArgs>
+                        <arg>--enable-preview</arg>
+                        <arg>--add-modules=jdk.incubator.concurrent</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
         </plugins>
