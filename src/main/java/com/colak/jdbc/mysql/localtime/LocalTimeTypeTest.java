@@ -1,4 +1,4 @@
-package com.colak.jdbc.mysql.yeartype;
+package com.colak.jdbc.mysql.localtime;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -7,9 +7,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.time.LocalTime;
 
 @Slf4j
-public class YearTypeTest {
+public class LocalTimeTypeTest {
 
     private static final String TABLE_NAME = "datetime_types_table";
 
@@ -20,10 +22,12 @@ public class YearTypeTest {
 
         try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
             clearTable(connection);
-            insertAsInteger(connection);
-            selectAsInteger(connection);
-            selectAsObject(connection);
+            insertAsTime(connection);
+            selectAsTime(connection);
 
+            clearTable(connection);
+            insertAsObject(connection);
+            selectAsObject(connection);
 
         } catch (Exception exception) {
             log.error("Exception ", exception);
@@ -37,12 +41,13 @@ public class YearTypeTest {
         }
     }
 
-    private static void insertAsInteger(Connection connection) throws SQLException {
-        String insertQuery = "INSERT INTO " + TABLE_NAME + " (year_column) VALUES (?)";
+    private static void insertAsTime(Connection connection) throws SQLException {
+        String insertQuery = "INSERT INTO " + TABLE_NAME + " (time_column) VALUES (?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
 
-            // Setting the value for the year_column
-            preparedStatement.setInt(1, 2024);
+            LocalTime localTime = LocalTime.of(23, 59, 59, 999999999);
+            Time sqlTime = Time.valueOf(localTime);
+            preparedStatement.setTime(1, sqlTime);
 
             // Executing the INSERT operation
             int rowsAffected = preparedStatement.executeUpdate();
@@ -55,29 +60,44 @@ public class YearTypeTest {
         }
     }
 
-    private static void selectAsInteger(Connection connection) throws SQLException {
+    private static void selectAsTime(Connection connection) throws SQLException {
         String insertQuery = "SELECT * FROM " + TABLE_NAME;
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-             ResultSet resultSet = preparedStatement.executeQuery();) {
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             resultSet.next();
-            Object object = resultSet.getObject("year_column");
-            int columnValue = resultSet.getInt("year_column");
+            Time value = resultSet.getTime("time_column");
+            LocalTime localTime = value.toLocalTime();
+            log.info("time_column: " + localTime);
+        }
+    }
 
-            log.info("year_column: " + columnValue);
+    private static void insertAsObject(Connection connection) throws SQLException {
+        String insertQuery = "INSERT INTO " + TABLE_NAME + " (time_column) VALUES (?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+
+            LocalTime localTime = LocalTime.of(23, 59, 59);
+            preparedStatement.setObject(1, localTime);
+
+            // Executing the INSERT operation
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                log.info("Insert successful!");
+            } else {
+                log.info("Insert failed.");
+            }
         }
     }
 
     private static void selectAsObject(Connection connection) throws SQLException {
         String insertQuery = "SELECT * FROM " + TABLE_NAME;
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-             ResultSet resultSet = preparedStatement.executeQuery();) {
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             resultSet.next();
-            // java.sql.Date
-            Object object = resultSet.getObject("year_column");
-
-            log.info("year_column: " + object);
+            LocalTime value = resultSet.getObject("time_column", LocalTime.class);
+            log.info("time_column: " + value);
         }
     }
 

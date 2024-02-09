@@ -21,14 +21,11 @@ public class BitTypeTest {
         String password = "12345678";
 
         try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
-
             clearTable(connection);
-
             insertOneBit(connection);
             selectOneBit(connection);
 
             clearTable(connection);
-
             insertBitString(connection);
             selectBitString(connection);
 

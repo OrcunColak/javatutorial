@@ -22,9 +22,7 @@ public class VarCharTypeTest {
         String password = "12345678";
 
         try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
-
             clearTable(connection);
-
             insertAsVarChar(connection);
             selectAsVarChar(connection);
 
