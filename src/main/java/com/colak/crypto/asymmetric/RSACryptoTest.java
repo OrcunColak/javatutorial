@@ -1,4 +1,4 @@
-package com.colak.crypto;
+package com.colak.crypto.asymmetric;
 
 import lombok.extern.slf4j.Slf4j;
 
