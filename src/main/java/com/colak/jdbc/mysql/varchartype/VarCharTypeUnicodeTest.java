@@ -12,7 +12,7 @@ import java.sql.SQLException;
  * MySQl can write and read unicode string with preparedStatement.setString() and resultSet.getString()
  */
 @Slf4j
-public class VarCharTypeTest {
+public class VarCharTypeUnicodeTest {
 
     private static final String TABLE_NAME = "all_char_types_table";
 
@@ -23,8 +23,8 @@ public class VarCharTypeTest {
 
         try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
             clearTable(connection);
-            insertAsVarChar(connection);
-            selectAsVarChar(connection);
+            insertAsString(connection);
+            selectAsString(connection);
 
 
         } catch (Exception exception) {
@@ -39,7 +39,7 @@ public class VarCharTypeTest {
         }
     }
 
-    private static void insertAsVarChar(Connection connection) throws SQLException {
+    private static void insertAsString(Connection connection) throws SQLException {
         String insertQuery = "INSERT INTO " + TABLE_NAME + " (varchar_column) VALUES (?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
 
@@ -57,7 +57,7 @@ public class VarCharTypeTest {
         }
     }
 
-    private static void selectAsVarChar(Connection connection) throws SQLException {
+    private static void selectAsString(Connection connection) throws SQLException {
         String insertQuery = "SELECT * FROM " + TABLE_NAME;
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
              ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -65,7 +65,7 @@ public class VarCharTypeTest {
             resultSet.next();
             String value = resultSet.getString("varchar_column");
 
-            // Hello, ??, ?????
+            // "Hello, 你好, مرحبا"
             log.info("varcharColumn: " + value);
         }
     }
