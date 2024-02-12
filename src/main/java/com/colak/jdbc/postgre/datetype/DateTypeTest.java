@@ -1,17 +1,17 @@
-package com.colak.jdbc.postgre.localtime;
+package com.colak.jdbc.postgre.datetype;
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.time.LocalTime;
+import java.time.LocalDate;
 
 @Slf4j
-public class LocalTimeTypeTest {
+public class DateTypeTest {
 
     private static final String TABLE_NAME = "datetime_types_table";
 
@@ -22,8 +22,8 @@ public class LocalTimeTypeTest {
 
         try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
             clearTable(connection);
-            insertAsTime(connection);
-            selectAsTime(connection);
+            insertAsDate(connection);
+            selectAsDate(connection);
 
             clearTable(connection);
             insertAsObject(connection);
@@ -41,13 +41,13 @@ public class LocalTimeTypeTest {
         }
     }
 
-    private static void insertAsTime(Connection connection) throws SQLException {
-        String insertQuery = "INSERT INTO " + TABLE_NAME + " (time_column) VALUES (?)";
+    private static void insertAsDate(Connection connection) throws SQLException {
+        String insertQuery = "INSERT INTO " + TABLE_NAME + " (date_column) VALUES (?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
 
-            LocalTime localTime = LocalTime.of(23, 59, 59, 999999999);
-            Time sqlTime = Time.valueOf(localTime);
-            preparedStatement.setTime(1, sqlTime);
+            LocalDate localDateTime = LocalDate.of(2024, 2, 9);
+            Date sqlDate = Date.valueOf(localDateTime);
+            preparedStatement.setDate(1, sqlDate);
 
             // Executing the INSERT operation
             int rowsAffected = preparedStatement.executeUpdate();
@@ -60,24 +60,24 @@ public class LocalTimeTypeTest {
         }
     }
 
-    private static void selectAsTime(Connection connection) throws SQLException {
+    private static void selectAsDate(Connection connection) throws SQLException {
         String insertQuery = "SELECT * FROM " + TABLE_NAME;
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             resultSet.next();
-            Time value = resultSet.getTime("time_column");
-            LocalTime localTime = value.toLocalTime();
-            log.info("time_column: " + localTime);
+            Date value = resultSet.getDate("date_column");
+            LocalDate localDate = value.toLocalDate();
+            log.info("date_column: " + localDate);
         }
     }
 
     private static void insertAsObject(Connection connection) throws SQLException {
-        String insertQuery = "INSERT INTO " + TABLE_NAME + " (time_column) VALUES (?)";
+        String insertQuery = "INSERT INTO " + TABLE_NAME + " (date_column) VALUES (?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
 
-            LocalTime localTime = LocalTime.of(23, 59, 59);
-            preparedStatement.setObject(1, localTime);
+            LocalDate localDate = LocalDate.of(2024, 2, 9);
+            preparedStatement.setObject(1, localDate);
 
             // Executing the INSERT operation
             int rowsAffected = preparedStatement.executeUpdate();
@@ -96,8 +96,8 @@ public class LocalTimeTypeTest {
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             resultSet.next();
-            LocalTime value = resultSet.getObject("time_column", LocalTime.class);
-            log.info("time_column: " + value);
+            LocalDate localDate = resultSet.getObject("date_column", LocalDate.class);
+            log.info("date_column: " + localDate);
         }
     }
 

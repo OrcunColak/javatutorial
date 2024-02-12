@@ -1,29 +1,29 @@
-package com.colak.jdbc.postgre.localdate;
+package com.colak.jdbc.mysql.timetype;
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.sql.Time;
+import java.time.LocalTime;
 
 @Slf4j
-public class LocalDateTypeTest {
+public class TimeTypeTest {
 
     private static final String TABLE_NAME = "datetime_types_table";
 
     public static void main(String[] args) {
-        String jdbcUrl = "jdbc:postgresql://localhost:5432/db";
-        String username = "postgres";
-        String password = "postgres";
+        String jdbcUrl = "jdbc:mysql://localhost:3306/userdb";
+        String username = "root";
+        String password = "12345678";
 
         try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
             clearTable(connection);
-            insertAsDate(connection);
-            selectAsDate(connection);
+            insertAsTime(connection);
+            selectAsTime(connection);
 
             clearTable(connection);
             insertAsObject(connection);
@@ -41,13 +41,13 @@ public class LocalDateTypeTest {
         }
     }
 
-    private static void insertAsDate(Connection connection) throws SQLException {
-        String insertQuery = "INSERT INTO " + TABLE_NAME + " (date_column) VALUES (?)";
+    private static void insertAsTime(Connection connection) throws SQLException {
+        String insertQuery = "INSERT INTO " + TABLE_NAME + " (time_column) VALUES (?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
 
-            LocalDate localDateTime = LocalDate.of(2024, 2, 9);
-            Date sqlDate = Date.valueOf(localDateTime);
-            preparedStatement.setDate(1, sqlDate);
+            LocalTime localTime = LocalTime.of(23, 59, 59, 999999999);
+            Time sqlTime = Time.valueOf(localTime);
+            preparedStatement.setTime(1, sqlTime);
 
             // Executing the INSERT operation
             int rowsAffected = preparedStatement.executeUpdate();
@@ -60,24 +60,24 @@ public class LocalDateTypeTest {
         }
     }
 
-    private static void selectAsDate(Connection connection) throws SQLException {
+    private static void selectAsTime(Connection connection) throws SQLException {
         String insertQuery = "SELECT * FROM " + TABLE_NAME;
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             resultSet.next();
-            Date value = resultSet.getDate("date_column");
-            LocalDate localDate = value.toLocalDate();
-            log.info("date_column: " + localDate);
+            Time value = resultSet.getTime("time_column");
+            LocalTime localTime = value.toLocalTime();
+            log.info("time_column: " + localTime);
         }
     }
 
     private static void insertAsObject(Connection connection) throws SQLException {
-        String insertQuery = "INSERT INTO " + TABLE_NAME + " (date_column) VALUES (?)";
+        String insertQuery = "INSERT INTO " + TABLE_NAME + " (time_column) VALUES (?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
 
-            LocalDate localDate = LocalDate.of(2024, 2, 9);
-            preparedStatement.setObject(1, localDate);
+            LocalTime localTime = LocalTime.of(23, 59, 59);
+            preparedStatement.setObject(1, localTime);
 
             // Executing the INSERT operation
             int rowsAffected = preparedStatement.executeUpdate();
@@ -96,8 +96,8 @@ public class LocalDateTypeTest {
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             resultSet.next();
-            LocalDate localDate = resultSet.getObject("date_column", LocalDate.class);
-            log.info("date_column: " + localDate);
+            LocalTime value = resultSet.getObject("time_column", LocalTime.class);
+            log.info("time_column: " + value);
         }
     }
 
