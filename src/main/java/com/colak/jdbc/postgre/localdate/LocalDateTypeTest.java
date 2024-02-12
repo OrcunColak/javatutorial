@@ -1,4 +1,4 @@
-package com.colak.jdbc.mysql.localdate;
+package com.colak.jdbc.postgre.localdate;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,9 +16,9 @@ public class LocalDateTypeTest {
     private static final String TABLE_NAME = "datetime_types_table";
 
     public static void main(String[] args) {
-        String jdbcUrl = "jdbc:mysql://localhost:3306/userdb";
-        String username = "root";
-        String password = "12345678";
+        String jdbcUrl = "jdbc:postgresql://localhost:5432/db";
+        String username = "postgres";
+        String password = "postgres";
 
         try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
             clearTable(connection);
@@ -68,7 +68,7 @@ public class LocalDateTypeTest {
             resultSet.next();
             Date value = resultSet.getDate("date_column");
             LocalDate localDate = value.toLocalDate();
-            log.info("time_column: " + localDate);
+            log.info("date_column: " + localDate);
         }
     }
 
