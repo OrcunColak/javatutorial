@@ -1,4 +1,4 @@
-package com.colak.jdbc.oracle.timestampwithtimezonetype;
+package com.colak.jdbc.oracle.timestampwithlocaltimetype;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -7,12 +7,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.TimeZone;
 
 @Slf4j
-public class TimestamWithTimeZoneTypeTest {
+public class TimestamWithLocalTimeTypeTest {
 
     private static final String TABLE_NAME = "datetime_types_table";
 
@@ -22,7 +23,6 @@ public class TimestamWithTimeZoneTypeTest {
         String password = "My1passw";
 
         try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
-
             clearTable(connection);
             insertAsOffsetDateTime(connection);
             // offsetDateTime : 2022-02-06T13:01:05.123457+03:00
@@ -34,8 +34,8 @@ public class TimestamWithTimeZoneTypeTest {
 
         setJvmTimeZone();
         try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
-            // No change
-            // offsetDateTime : 2022-02-06T13:01:05.123457+03:00
+            // Different result
+            // offsetDateTime : 2022-02-06T15:31:05.123457+05:30
             selectAsOffsetDateTime(connection);
 
         } catch (Exception exception) {
@@ -48,6 +48,16 @@ public class TimestamWithTimeZoneTypeTest {
         TimeZone.setDefault(timeZone);
     }
 
+    // This has no effect
+    private static void setSessionTimeZone(Connection connection, String timeZone) throws SQLException {
+
+        try (Statement statement = connection.createStatement()) {
+            // Set the session time zone using ALTER SESSION
+            String alterSessionSQL = "ALTER SESSION SET TIME_ZONE = '" + timeZone + "'";
+            statement.execute(alterSessionSQL);
+        }
+    }
+
     private static void clearTable(Connection connection) throws SQLException {
         String deleteQuery = "DELETE FROM " + TABLE_NAME;
         try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
@@ -56,7 +66,7 @@ public class TimestamWithTimeZoneTypeTest {
     }
 
     private static void insertAsOffsetDateTime(Connection connection) throws SQLException {
-        String insertQuery = "INSERT INTO " + TABLE_NAME + " (timestamp_with_time_zone_column) VALUES (?)";
+        String insertQuery = "INSERT INTO " + TABLE_NAME + " (timestamp_with_local_time_zone_column) VALUES (?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
 
             // Use Zone offset (UTC+3)
@@ -83,9 +93,8 @@ public class TimestamWithTimeZoneTypeTest {
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             resultSet.next();
-            OffsetDateTime offsetDateTime = resultSet.getObject("timestamp_with_time_zone_column", OffsetDateTime.class);
+            OffsetDateTime offsetDateTime = resultSet.getObject("timestamp_with_local_time_zone_column", OffsetDateTime.class);
 
-            // offsetDateTime : 2022-02-06T13:01:05.123457+03:00
             log.info("offsetDateTime : " + offsetDateTime);
         }
     }
