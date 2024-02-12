@@ -14,8 +14,8 @@ public class DatabaseMetadataTest {
 
     public static void main(String[] args) {
         String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:FREE";
-        String username = "system";
-        String password = "12345678";
+        String username = "sa";
+        String password = "My1passw";
 
         try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
 
