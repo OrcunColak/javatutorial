@@ -68,6 +68,7 @@ public class TimeTypeTest {
             resultSet.next();
             Time value = resultSet.getTime("time_column");
             LocalTime localTime = value.toLocalTime();
+            // time_column: 23:59:59
             log.info("time_column: " + localTime);
         }
     }
@@ -97,6 +98,7 @@ public class TimeTypeTest {
 
             resultSet.next();
             LocalTime value = resultSet.getObject("time_column", LocalTime.class);
+            // time_column: 23:59:59
             log.info("time_column: " + value);
         }
     }

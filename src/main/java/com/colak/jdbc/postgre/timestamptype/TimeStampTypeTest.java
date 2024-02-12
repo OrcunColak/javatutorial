@@ -1,17 +1,17 @@
-package com.colak.jdbc.postgre.datetype;
+package com.colak.jdbc.postgre.timestamptype;
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Slf4j
-public class DateTypeTest {
+public class TimeStampTypeTest {
 
     private static final String TABLE_NAME = "datetime_types_table";
 
@@ -22,8 +22,8 @@ public class DateTypeTest {
 
         try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
             clearTable(connection);
-            insertAsDate(connection);
-            selectAsDate(connection);
+            insertAsTimestamp(connection);
+            selectAsTimestamp(connection);
 
             clearTable(connection);
             insertAsObject(connection);
@@ -41,13 +41,13 @@ public class DateTypeTest {
         }
     }
 
-    private static void insertAsDate(Connection connection) throws SQLException {
-        String insertQuery = "INSERT INTO " + TABLE_NAME + " (date_column) VALUES (?)";
+    private static void insertAsTimestamp(Connection connection) throws SQLException {
+        String insertQuery = "INSERT INTO " + TABLE_NAME + " (timestamp_column) VALUES (?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
 
-            LocalDate localDateTime = LocalDate.of(2024, 2, 9);
-            Date sqlDate = Date.valueOf(localDateTime);
-            preparedStatement.setDate(1, sqlDate);
+            LocalDateTime localDateTime = LocalDateTime .of(2024,2,12,23,23,23,999999999);
+            Timestamp sqlTimestamp = Timestamp.valueOf(localDateTime);
+            preparedStatement.setTimestamp(1, sqlTimestamp);
 
             // Executing the INSERT operation
             int rowsAffected = preparedStatement.executeUpdate();
@@ -60,25 +60,25 @@ public class DateTypeTest {
         }
     }
 
-    private static void selectAsDate(Connection connection) throws SQLException {
+    private static void selectAsTimestamp(Connection connection) throws SQLException {
         String insertQuery = "SELECT * FROM " + TABLE_NAME;
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             resultSet.next();
-            Date value = resultSet.getDate("date_column");
-            LocalDate localDate = value.toLocalDate();
-            // date_column: 2024-02-09
-            log.info("date_column: " + localDate);
+            Timestamp value = resultSet.getTimestamp("timestamp_column");
+            LocalDateTime localDateTime = value.toLocalDateTime();
+            // timestamp_column: 2024-02-12T23:23:24
+            log.info("timestamp_column: " + localDateTime);
         }
     }
 
     private static void insertAsObject(Connection connection) throws SQLException {
-        String insertQuery = "INSERT INTO " + TABLE_NAME + " (date_column) VALUES (?)";
+        String insertQuery = "INSERT INTO " + TABLE_NAME + " (timestamp_column) VALUES (?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
 
-            LocalDate localDate = LocalDate.of(2024, 2, 9);
-            preparedStatement.setObject(1, localDate);
+            LocalDateTime localDateTime = LocalDateTime .of(2024,2,12,23,23,23,999999999);
+            preparedStatement.setObject(1, localDateTime);
 
             // Executing the INSERT operation
             int rowsAffected = preparedStatement.executeUpdate();
@@ -97,9 +97,9 @@ public class DateTypeTest {
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             resultSet.next();
-            LocalDate localDate = resultSet.getObject("date_column", LocalDate.class);
-            // date_column: 2024-02-09
-            log.info("date_column: " + localDate);
+            LocalDateTime value = resultSet.getObject("timestamp_column", LocalDateTime.class);
+            // timestamp_column: 2024-02-12T23:23:24
+            log.info("timestamp_column: " + value);
         }
     }
 
