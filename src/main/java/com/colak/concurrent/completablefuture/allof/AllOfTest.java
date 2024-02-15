@@ -39,7 +39,10 @@ public class AllOfTest {
 
         CompletableFuture<Void> allFutures = CompletableFuture.allOf(futureList1, futureList2, futureList3);
 
+        // we can not use thenCombine() because, there are more than 2 CompletableFuture objects
         CompletableFuture<List<Integer>> combinedFuture = allFutures.thenApply(v -> {
+            // main thread
+            log.info("thenApply");
             List<Integer> result = new ArrayList<>();
             result.addAll(futureList1.join());
             result.addAll(futureList2.join());
