@@ -1,4 +1,4 @@
-package com.colak.concurrent.notify;
+package com.colak.concurrent.thread.notify;
 
 import lombok.extern.slf4j.Slf4j;
 
