@@ -1,32 +1,31 @@
-package com.colak.concurrent.readwritelock;
+package com.colak.concurrent.reentrantlock;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Slf4j
-public class ReadWriteLockTest {
+public class ReentratnLockTest {
 
-    private final ReadWriteLock lock = new ReentrantReadWriteLock();
-    private int balance = 0;
+    private final ReentrantLock lock = new ReentrantLock();
+    private int balance = 100;
 
     public static void main(String[] args) throws InterruptedException {
-        ReadWriteLockTest readWriteLockTest = new ReadWriteLockTest();
+        ReentratnLockTest readWriteLockTest = new ReentratnLockTest();
         readWriteLockTest.testLock();
     }
 
     private void testLock() throws InterruptedException {
         Thread wifeThread = new Thread(() -> {
             for (int index = 0; index < 100; index++) {
-                log.info("Read : {}", readBalance());
+                log.info("Withdraw : {}", withdraw(2));
             }
         });
         wifeThread.start();
 
         Thread husbandThread = new Thread(() -> {
             for (int index = 0; index < 100; index++) {
-                log.info("Write : {}", deposit(1));
+                log.info("Deposit : {}", deposit(1));
             }
         });
         husbandThread.start();
@@ -35,28 +34,33 @@ public class ReadWriteLockTest {
         wifeThread.join();
     }
 
-    private int readBalance() {
+    private int withdraw(int value) {
         // Acquiring the read lock
-        lock.readLock().lock();
+        lock.lock();
         try {
-            // Perform read operations on the shared resource
-            return balance;
+            if (balance >= value) {
+                // Perform read operations on the shared resource
+                balance = balance - value;
+                return balance;
+            } else {
+                return balance;
+            }
         } finally {
             // read lock released
-            lock.readLock().unlock();
+            lock.unlock();
         }
     }
 
     public int deposit(int value) {
         // acquiring the write lock
-        lock.writeLock().lock();
+        lock.lock();
         try {
             // Perform write operations on the shared resource
             balance += value;
             return balance;
         } finally {
             // write lock released
-            lock.writeLock().unlock();
+            lock.unlock();
         }
     }
 }
