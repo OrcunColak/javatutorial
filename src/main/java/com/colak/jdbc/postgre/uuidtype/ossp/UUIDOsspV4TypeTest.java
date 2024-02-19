@@ -1,4 +1,4 @@
-package com.colak.jdbc.postgre.uuidtype;
+package com.colak.jdbc.postgre.uuidtype.ossp;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -10,12 +10,12 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 /**
- * This test writes and reads a Java UUID with Jdbc
+ * This test reads an uuid-ossp v4 with Jdbc
  */
 @Slf4j
-public class UUIDTypeTest {
+public class UUIDOsspV4TypeTest {
 
-    private static final String TABLE_NAME = "uuid_types_table";
+    private static final String TABLE_NAME = "uuid_osspv4_table";
 
     public static void main(String[] args) {
         String jdbcUrl = "jdbc:postgresql://localhost:5432/db";
@@ -42,13 +42,12 @@ public class UUIDTypeTest {
 
 
     private static void insertAsObject(Connection connection) throws SQLException {
-        String insertQuery = "INSERT INTO " + TABLE_NAME + " (id) VALUES (?)";
+        String insertQuery = "INSERT INTO " + TABLE_NAME + " (varchar_column) VALUES (?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
 
-            UUID uuid = UUID.randomUUID();
-            log.info("UUID: " + uuid);
+            String value = "value1";
 
-            preparedStatement.setObject(1, uuid);
+            preparedStatement.setString(1, value);
 
             // Executing the INSERT operation
             int rowsAffected = preparedStatement.executeUpdate();
@@ -68,7 +67,8 @@ public class UUIDTypeTest {
 
             resultSet.next();
             UUID uuid = resultSet.getObject("id", UUID.class);
-            // UUID: a5449be2-ba79-4217-92f4-7fc259e8472f
+            // UUID: 5b25017a-e370-4a6b-a9a5-e1051733fafd
+            // Java can read uuid_generate_v4()
             log.info("UUID: " + uuid);
         }
     }
