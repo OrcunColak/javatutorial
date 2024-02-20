@@ -6,6 +6,7 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * See <a href="https://medium.com/@sj.anyway/asynchronous-programming-in-java-with-completablefuture-2e6d7a6d43e0">...</a>
+ * Combines the result of future1 and future2
  */
 @Slf4j
 public class ThenCombineTest {
