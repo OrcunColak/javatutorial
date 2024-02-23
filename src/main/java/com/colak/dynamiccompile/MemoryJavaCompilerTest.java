@@ -41,7 +41,8 @@ public class MemoryJavaCompilerTest {
             List<String> codeList = List.of(code1, code2);
 
             // Compile code snippets in memory
-            Method mainMethod = new MemoryJavaCompiler().compileStaticMethod("main", "com.colak.classloader.AlienInvasion", fileNameList, codeList);
+            MemoryJavaCompiler memoryJavaCompiler = new MemoryJavaCompiler();
+            Method mainMethod = memoryJavaCompiler.compileStaticMethod("main", "com.colak.classloader.AlienInvasion", fileNameList, codeList);
             mainMethod.invoke(null, (Object) null);
 
             log.info("Test passed");
