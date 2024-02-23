@@ -4,6 +4,10 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.List;
 
+/**
+ * For the test see <a href="https://www.alibabacloud.com/blog/implementing-java-class-isolation-loading_597343">...</a>
+ * For the class loader see <a href="https://medium.com/@isuru89/java-a-child-first-class-loader-cbd9c3d0305">...</a>
+ */
 public class ChildFirsClassLoaderTest {
 
     public static void main(String[] args) throws Exception {
