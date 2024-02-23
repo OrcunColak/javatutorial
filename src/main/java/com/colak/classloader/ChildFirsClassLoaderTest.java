@@ -8,12 +8,7 @@ public class ChildFirsClassLoaderTest {
 
     public static void main(String[] args) throws Exception {
 
-        List<String> list = List.of("com/colak/classloader/TestA.class");
-        JarUtil.createJarFile(
-                "target/classes/",
-                list,
-                "test.jar"
-        );
+        createJar();
 
 
         // Specify the path to the JAR file
@@ -31,5 +26,17 @@ public class ChildFirsClassLoaderTest {
         mainMethod.invoke(null, new Object[]{args});
 
 
+    }
+
+    private static void createJar() {
+        List<String> list = List.of(
+                "com/colak/classloader/TestA.class",
+                "com/colak/classloader/Testb.class"
+        );
+        JarUtil.createJarFile(
+                "target/classes/",
+                list,
+                "test.jar"
+        );
     }
 }
