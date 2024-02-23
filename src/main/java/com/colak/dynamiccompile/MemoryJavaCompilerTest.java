@@ -14,6 +14,8 @@ public class MemoryJavaCompilerTest {
             List<String> fileNameList = List.of("AlienInvasion.java", "Starship.java");
 
             String code1 = """
+                    package com.colak.classloader;
+                    
                     public class AlienInvasion {
                           public static void main(String[] args) {
                               AlienInvasion alienInvasion = new AlienInvasion();
@@ -27,6 +29,8 @@ public class MemoryJavaCompilerTest {
                       }
                     """;
             String code2 = """
+                    package com.colak.classloader;
+                    
                     public class Starship {
                            public void hello() {
                                System.out.println("Starship: " + this.getClass().getClassLoader());
@@ -37,7 +41,7 @@ public class MemoryJavaCompilerTest {
             List<String> codeList = List.of(code1, code2);
 
             // Compile code snippets in memory
-            Method mainMethod = new MemoryJavaCompiler().compileStaticMethod("main", "AlienInvasion", fileNameList, codeList);
+            Method mainMethod = new MemoryJavaCompiler().compileStaticMethod("main", "com.colak.classloader.AlienInvasion", fileNameList, codeList);
             mainMethod.invoke(null, (Object) null);
 
             log.info("Test passed");
