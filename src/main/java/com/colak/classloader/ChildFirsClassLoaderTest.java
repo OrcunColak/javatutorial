@@ -26,7 +26,7 @@ public class ChildFirsClassLoaderTest {
 
         ChildFirstClassLoader classLoader = new ChildFirstClassLoader(urls, Thread.currentThread().getContextClassLoader());
 
-        Class<?> testAClass = classLoader.findClass("com.colak.classloader.TestA");
+        Class<?> testAClass = classLoader.loadClass("com.colak.classloader.TestA");
         Method mainMethod = testAClass.getDeclaredMethod("main", String[].class);
         mainMethod.invoke(null, new Object[]{args});
 
