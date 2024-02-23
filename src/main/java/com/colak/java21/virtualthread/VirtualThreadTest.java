@@ -6,7 +6,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.ThreadFactory;
 
 /**
  * See <a href="https://satishkumarandey.medium.com/embracing-virtual-threads-in-java-unlocking-simplicity-and-scalability-0e3050341946">...</a>
@@ -61,9 +60,8 @@ public class VirtualThreadTest {
     }
 
     private static void createVirtualThreadWithExecutors2() throws ExecutionException, InterruptedException {
-        ThreadFactory factory = Thread.ofVirtual().factory();
-        try (ExecutorService myExecutor = Executors.newThreadPerTaskExecutor(factory)) {
-
+        // Here we are not using a ThreadFactory to give virtual threads a name
+        try (ExecutorService myExecutor = Executors.newVirtualThreadPerTaskExecutor()) {
             Future<?> future = myExecutor.submit(() -> log.info("Running thread"));
             future.get();
             log.info("Task completed");
