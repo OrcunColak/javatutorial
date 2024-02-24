@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  * See <a href="https://medium.com/@suveshagnihotri/asynchronous-programming-in-java-a612281c9d2f">...</a>
  */
 @Slf4j
-public class WhenCompleteExceptionTest {
+class WhenCompleteExceptionTest {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         // Fetch Quotation

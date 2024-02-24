@@ -10,7 +10,7 @@ import java.util.concurrent.CompletableFuture;
  * See <a href="https://medium.com/@rafaelmisidoro/how-return-in-one-only-list-using-completablefuture-for-java-1b2c2a452763">...</a>
  */
 @Slf4j
-public class AllOfTest {
+class AllOfTest {
 
     public static void main(String[] args) throws Exception {
         CompletableFuture<List<Integer>> futureList1 = CompletableFuture.supplyAsync(() -> {

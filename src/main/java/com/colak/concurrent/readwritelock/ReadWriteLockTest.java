@@ -6,7 +6,7 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 @Slf4j
-public class ReadWriteLockTest {
+class ReadWriteLockTest {
 
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
     private int balance = 0;

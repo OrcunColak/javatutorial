@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
  * See <a href="https://medium.com/@reetesh043/understanding-the-difference-between-wait-and-sleep-methods-64958feffbb8">...</a>
  */
 @Slf4j
-public class NotifyTest {
+class NotifyTest {
 
     private static class MyWaitingThread extends Thread {
         @Override

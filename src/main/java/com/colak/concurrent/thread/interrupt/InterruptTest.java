@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
  * See <a href="https://hemanthcse1.medium.com/interrupts-in-java-5bfcd752fadc">...</a>
  */
 @Slf4j
-public class InterruptTest {
+class InterruptTest {
 
     public static void main(String[] args) throws InterruptedException {
         Thread newThread = new Thread(() -> {
