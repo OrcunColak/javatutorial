@@ -10,7 +10,18 @@ public class StringTemplateTest {
 
     public static void main(String[] args) {
         StringTemplateTest stringTemplateTest = new StringTemplateTest();
+        stringTemplateTest.singleLine();
         stringTemplateTest.multiline();
+    }
+
+    private void singleLine() {
+        String firstName = "John";
+        String lastName = "Doe";
+        int age = 30;
+        String city = "New York";
+
+        String userInfo = STR."FirstName: \{firstName} LastName: \{lastName} Age: \{age} City: \{city}";
+        log.info("single line {}", userInfo);
     }
 
     private void multiline() {
@@ -24,6 +35,6 @@ public class StringTemplateTest {
                     "address": "\{ address }"
                 }
                 """ ;
-        log.info("multi line {}", json);
+        log.info("multi line JSON {}", json);
     }
 }
