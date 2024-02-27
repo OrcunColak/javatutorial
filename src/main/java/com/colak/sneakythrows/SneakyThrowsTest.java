@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
- * See https://medium.com/unibench/java-hack-sneaky-throws-explained-88f445ed983b
+ * See <a href="https://medium.com/unibench/java-hack-sneaky-throws-explained-88f445ed983b">...</a>
  */
 public class SneakyThrowsTest {
 
