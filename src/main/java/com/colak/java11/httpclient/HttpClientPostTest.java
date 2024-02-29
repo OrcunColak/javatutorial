@@ -7,6 +7,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 class HttpClientPostTest {
@@ -15,6 +16,7 @@ class HttpClientPostTest {
 
         HttpClientPostTest httpClientPostTest = new HttpClientPostTest();
         httpClientPostTest.postExample();
+        httpClientPostTest.postAsyncExample();
     }
 
     // See https://medium.com/@satyendra.jaiswal/webhooks-and-asynchronous-apis-real-time-communication-patterns-b6dee06b855d
@@ -32,6 +34,31 @@ class HttpClientPostTest {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             log.info("Webhook response code: " + response.statusCode());
+        }
+    }
+
+    private void postAsyncExample() {
+        String url = "https://example.com/webhook/subscribe";
+
+        try (HttpClient client = HttpClient.newHttpClient()) {
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.noBody())
+                    .build();
+
+            CompletableFuture<HttpResponse<String>> responseFuture = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+
+            // Process the response
+            responseFuture.thenAccept(response -> {
+                if (response.statusCode() == 200) {
+                    log.info("Subscription successful");
+
+                } else {
+                    log.error("Failed. Status code: " + response.statusCode());
+                }
+            }).join(); // Blocking, used for demonstration purposes
         }
     }
 }
