@@ -3,7 +3,7 @@ package com.colak.unicode;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class EmojiTest {
+class EmojiTest {
 
     public static void main(String[] args) {
 

@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  * Threads in different thread groups will not be included in the array returned by this method
  */
 @Slf4j
-public class EnumTest {
+class EnumTest {
 
     public static void main(String[] args) {
         Thread myThread = new Thread(() -> {
