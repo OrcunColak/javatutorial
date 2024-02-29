@@ -20,20 +20,20 @@ import java.util.concurrent.CompletableFuture;
  * timeouts, custom SSLContext, or Proxy.
  */
 @Slf4j
-public class HttpClientTest {
+class HttpClientGetTest {
 
     public static void main(String[] args) throws Exception {
-        HttpClientTest httpClientTest = new HttpClientTest();
-        httpClientTest.getExample();
-        httpClientTest.getAsyncExample();
-        httpClientTest.getWithConnectionTimeoutExample();
-        httpClientTest.getWithRequestTimeoutExample();
-        httpClientTest.headExample();
+        HttpClientGetTest httpClientGetTest = new HttpClientGetTest();
+        httpClientGetTest.getExample();
+        httpClientGetTest.getAsyncExample();
+        httpClientGetTest.getWithConnectionTimeoutExample();
+        httpClientGetTest.getWithRequestTimeoutExample();
     }
 
 
     private void getExample() throws IOException, InterruptedException {
         try (HttpClient client = HttpClient.newHttpClient()) {
+
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create("https://www.google.com/"))
                     .GET()
@@ -46,6 +46,7 @@ public class HttpClientTest {
 
     private void getAsyncExample() {
         try (HttpClient client = HttpClient.newHttpClient()) {
+
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create("https://www.google.com/"))
                     .GET()
@@ -60,7 +61,7 @@ public class HttpClientTest {
         }
     }
 
-    private void getWithConnectionTimeoutExample() {
+    private void getWithConnectionTimeoutExample() throws IOException, InterruptedException {
         try (HttpClient client = HttpClient.newBuilder()
                 .connectTimeout(java.time.Duration.ofSeconds(10))
                 .build()) {
@@ -71,8 +72,6 @@ public class HttpClientTest {
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             log.info(response.body());
-        } catch (Exception exception) {
-            log.error("Exception caught");
         }
     }
 
@@ -85,18 +84,6 @@ public class HttpClientTest {
                     .header("Accept", "application/json")
                     .timeout(Duration.ofSeconds(10))
                     .GET()
-                    .build();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            log.info("Response Code: {}", response.statusCode());
-            log.info("Response Body: {}", response.body());
-        }
-    }
-
-    private void headExample() throws IOException, InterruptedException {
-        try (HttpClient client = HttpClient.newHttpClient()) {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://www.google.com/"))
-                    .HEAD()
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             log.info("Response Code: {}", response.statusCode());
