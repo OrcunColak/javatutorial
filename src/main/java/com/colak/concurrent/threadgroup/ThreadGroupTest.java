@@ -3,7 +3,7 @@ package com.colak.concurrent.threadgroup;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ThreadGroupTest {
+class ThreadGroupTest {
 
     public static void main(String[] args) throws InterruptedException {
         ThreadGroup group = new ThreadGroup("MyThreadGroup");

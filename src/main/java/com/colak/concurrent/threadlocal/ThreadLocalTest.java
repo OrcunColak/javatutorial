@@ -3,7 +3,7 @@ package com.colak.concurrent.threadlocal;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ThreadLocalTest {
+class ThreadLocalTest {
 
     public static void main(String[] args) {
         ThreadLocal<Integer> threadLocal = ThreadLocal.withInitial(() -> 0);
