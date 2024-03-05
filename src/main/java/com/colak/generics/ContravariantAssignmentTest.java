@@ -26,6 +26,4 @@ class ContravariantAssignmentTest {
             System.out.println("object = " + object);
         }
     }
-
-
 }
