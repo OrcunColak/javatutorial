@@ -8,8 +8,8 @@ import java.util.concurrent.locks.ReentrantLock;
 @Slf4j
 public class ConditionTest {
 
-    private final ReentrantLock lock = new ReentrantLock();
-    private int balance = 100;
+    private final ReentrantLock lock = new ReentrantLock(true);
+    private int balance = 0;
     private final Condition transactionCondition = lock.newCondition();
 
     public static void main(String[] args) throws Exception {
@@ -20,7 +20,7 @@ public class ConditionTest {
     private void testLock() throws InterruptedException {
         Thread wifeThread = new Thread(() -> {
             for (int index = 0; index < 100; index++) {
-                log.info("Withdraw balance : {}", withdraw(2));
+                log.info("Withdraw balance : {}", withdraw(1));
             }
         });
 
@@ -41,13 +41,13 @@ public class ConditionTest {
     public int withdraw(int value) {
         lock.lock();
         try {
-            while (balance < 50) {
+            while (balance == 0) {
                 log.info("Wife waiting for sufficient funds. Current balance: {}", balance);
                 transactionCondition.await();
             }
             balance -= value;
             // Signal for any waiting threads
-            transactionCondition.signal();
+            transactionCondition.signalAll();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // Preserve interrupted status
             log.error("Wife thread interrupted while waiting.", e);
@@ -66,7 +66,7 @@ public class ConditionTest {
             }
             balance += value;
             // Signal for any waiting threads
-            transactionCondition.signal();
+            transactionCondition.signalAll();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // Preserve interrupted status
             log.error("Husband thread interrupted while waiting.", e);
