@@ -9,7 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
 @Slf4j
 class ReentrantLockLockInterruptiblyTest {
 
-    private final ReentrantLock lock = new ReentrantLock();
+    private final ReentrantLock lock = new ReentrantLock(true);
     private int balance = 100;
 
     public static void main(String[] args) throws InterruptedException {
