@@ -12,7 +12,7 @@ import java.net.URL;
  * Try-with-resources might be a better choice
  */
 @Slf4j
-public class CleanupTest {
+class CleanupTest {
 
     public static void main(String[] args) throws Exception {
 
