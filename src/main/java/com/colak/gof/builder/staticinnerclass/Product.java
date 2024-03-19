@@ -1,4 +1,4 @@
-package com.colak.gof.builder;
+package com.colak.gof.builder.staticinnerclass;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class Product {
+class Product {
 
     private final String part1;
     private final String part2;

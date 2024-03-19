@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 final class MemoryClassLoader extends URLClassLoader {
+
+    // Class definitions
     private final Map<String, byte[]> classBytes;
 
     public MemoryClassLoader(Map<String, byte[]> classBytes) {

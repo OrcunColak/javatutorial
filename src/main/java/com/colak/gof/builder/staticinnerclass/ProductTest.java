@@ -1,9 +1,9 @@
-package com.colak.gof.builder;
+package com.colak.gof.builder.staticinnerclass;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class ProductTest {
+class ProductTest {
 
     public static void main(String[] args) {
         buildWithDefaultValue();
