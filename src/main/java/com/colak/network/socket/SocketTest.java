@@ -17,28 +17,28 @@ public class SocketTest {
     }
 
     private static void singleThreadedSocketServerTest() throws InterruptedException {
-        SingleThreadedSocketServer socketServer = new SingleThreadedSocketServer();
-        socketServer.start();
-        // Wait for server to start
-        TimeUnit.SECONDS.sleep(5);
+        try (SingleThreadedSocketServer socketServer = new SingleThreadedSocketServer()) {
+            socketServer.start();
+            // Wait for server to start
+            TimeUnit.SECONDS.sleep(5);
 
-        Client client = new Client();
-        client.start();
-        // Wait for processing
-        TimeUnit.SECONDS.sleep(5);
-        socketServer.stop();
+            Client client = new Client();
+            client.start();
+            // Wait for processing
+            TimeUnit.SECONDS.sleep(5);
+        }
     }
 
     private static void executorServiceSocketServerTest() throws InterruptedException {
-        ExecutorServiceSocketServer socketServer = new ExecutorServiceSocketServer();
-        socketServer.start();
-        // Wait for server to start
-        TimeUnit.SECONDS.sleep(5);
+        try (ExecutorServiceSocketServer socketServer = new ExecutorServiceSocketServer()) {
+            socketServer.start();
+            // Wait for server to start
+            TimeUnit.SECONDS.sleep(5);
 
-        Client client = new Client();
-        client.start();
-        // Wait for processing
-        TimeUnit.SECONDS.sleep(5);
-        socketServer.stop();
+            Client client = new Client();
+            client.start();
+            // Wait for processing
+            TimeUnit.SECONDS.sleep(5);
+        }
     }
 }

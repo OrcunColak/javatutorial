@@ -9,8 +9,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 @Slf4j
-public class SingleThreadedSocketServer {
-
+public class SingleThreadedSocketServer implements AutoCloseable {
     private static final int PORT = 12345;
     private volatile ServerSocket serverSocket;
 
@@ -31,16 +30,18 @@ public class SingleThreadedSocketServer {
         log.info("Server started");
     }
 
-    public void stop() {
+    @Override
+    public void close() {
         try {
-            serverSocket.close(); // This will interrupt the blocking accept() call
+            // This will interrupt the blocking accept() call
+            serverSocket.close();
         } catch (IOException _) {
         }
         log.info("Server stopped...");
     }
 
     /**
-     * Read the client InputStream and then close it
+     * Read the client InputStream and then close it.
      */
     private void handleClient(Socket clientSocket) {
         try (clientSocket;

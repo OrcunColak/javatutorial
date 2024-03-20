@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class ExecutorServiceSocketServer {
+public class ExecutorServiceSocketServer implements AutoCloseable {
 
     private static final int PORT = 12345;
     private final ExecutorService executors = Executors.newFixedThreadPool(10);
@@ -36,9 +36,11 @@ public class ExecutorServiceSocketServer {
         log.info("Server started");
     }
 
-    public void stop() {
+    @Override
+    public void close() {
         try {
-            serverSocket.close(); // This will interrupt the blocking accept() call
+            // This will interrupt the blocking accept() call
+            serverSocket.close();
         } catch (IOException _) {
         }
         executors.shutdown();
