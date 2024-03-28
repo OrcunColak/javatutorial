@@ -1,10 +1,11 @@
 package com.colak.java21.structuredtaskscope;
 
-import jdk.incubator.concurrent.StructuredTaskScope;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
+import java.util.concurrent.StructuredTaskScope;
+
+import static java.lang.StringTemplate.STR;
 
 /**
  * See <a href="https://medium.com/@phoenixrising_93140/what-is-structured-concurrency-java-21-6134374696be">...</a>
@@ -23,10 +24,10 @@ public class StructuredTaskScopeTest {
         // then all the subtasks are cancelled and control returns to the parent.
         // You can think of it like a short circuit operation policy.
         try (var scope = new StructuredTaskScope.ShutdownOnFailure()) {
-            Future<String> respA = scope.fork(this::taskThatErrorsOut);
-            Future<String> respB = scope.fork(this::justAnotherLongRunningTask);
+            StructuredTaskScope.Subtask<String> respA = scope.fork(this::taskThatErrorsOut);
+            StructuredTaskScope.Subtask<String> respB = scope.fork(this::justAnotherLongRunningTask);
             scope.join().throwIfFailed();
-            return STR. "\{ respA.get() } \{ respB.get() }" ;
+            return STR."\{ respA.get() } \{ respB.get() }" ;
         }
     }
 
@@ -38,7 +39,7 @@ public class StructuredTaskScopeTest {
             // the parent task is satisfied that any of the subtasks has succeeded, and it processes that result.
             scope.fork(this::taskThatErrorsOut);
             scope.fork(this::justAnotherLongRunningTask);
-            return STR. "\{ scope.join().result() }" ;
+            return STR."\{ scope.join().result() }" ;
         }
     }
 
