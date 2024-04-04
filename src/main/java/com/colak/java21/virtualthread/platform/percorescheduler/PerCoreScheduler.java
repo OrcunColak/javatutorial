@@ -1,4 +1,4 @@
-package com.colak.java21.virtualthread.percorescheduler;
+package com.colak.java21.virtualthread.platform.percorescheduler;
 
 import java.lang.reflect.Field;
 import java.util.concurrent.ArrayBlockingQueue;

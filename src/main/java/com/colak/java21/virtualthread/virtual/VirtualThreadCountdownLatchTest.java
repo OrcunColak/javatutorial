@@ -1,31 +1,29 @@
-package com.colak.java21.virtualthread;
+package com.colak.java21.virtualthread.virtual;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * See <a href="https://blog.stackademic.com/unveiling-the-power-of-virtual-threads-in-java-a-deep-dive-0c96fe50a3cb">...</a>
  */
 @Slf4j
-public class VirtualThreadReentrantLockTest {
+public class VirtualThreadCountdownLatchTest {
 
     public static void main(String[] args) throws InterruptedException {
-        ReentrantLock lock = new ReentrantLock();
+
+        int numberOfThreads = 2;
+        CountDownLatch latch = new CountDownLatch(numberOfThreads);
+
 
         Runnable task = () -> {
-            lock.lock();
-            try {
-                log.info("acquired the lock.");
+            log.info("is doing some work.");
+            // Simulate some work
+            sleep();
 
-                // Simulate some work
-                sleep();
-
-                log.info("released the lock.");
-            } finally {
-                lock.unlock();
-            }
+            log.info("has completed its work.");
+            latch.countDown();
         };
 
         Thread virtualThread1 = Thread.ofVirtual().name("virtual-1").start(task);

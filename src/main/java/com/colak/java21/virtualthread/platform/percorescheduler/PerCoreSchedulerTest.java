@@ -1,4 +1,4 @@
-package com.colak.java21.virtualthread.percorescheduler;
+package com.colak.java21.virtualthread.platform.percorescheduler;
 
 import lombok.extern.slf4j.Slf4j;
 
