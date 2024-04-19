@@ -1,4 +1,4 @@
-package com.colak.java16.datetime;
+package com.colak.java16.datetime.localized;
 
 import lombok.extern.slf4j.Slf4j;
 
