@@ -5,9 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Optional;
 
 @Slf4j
-public class OptionalConsumeTest {
+class OptionalConsumeTest {
 
-    public static void main(String[] args) {
+    public static void main() {
         Optional<String> optional = getOptional("foo");
         getValue(optional);
         getValueOrThrow(optional);
