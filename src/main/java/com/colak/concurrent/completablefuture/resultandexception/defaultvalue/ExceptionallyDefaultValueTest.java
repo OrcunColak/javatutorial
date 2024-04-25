@@ -6,13 +6,11 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-/**
- * See <a href="https://medium.com/@suveshagnihotri/asynchronous-programming-in-java-a612281c9d2f">...</a>
- */
+// See href="https://medium.com/@suveshagnihotri/asynchronous-programming-in-java-a612281c9d2f
 @Slf4j
 class ExceptionallyDefaultValueTest {
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    public static void main() throws ExecutionException, InterruptedException {
         // Fetch Quotation
         CompletableFuture<String> quotation = CompletableFuture.supplyAsync(() -> {
             // commonPool-worker-1

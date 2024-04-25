@@ -4,15 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.CompletableFuture;
 
-/**
- * See <a href="https://medium.com/@sj.anyway/asynchronous-programming-in-java-with-completablefuture-2e6d7a6d43e0">...</a>
- * Combines the result of future1 and future2.
- * future1 and future2 are independent
- */
+// See https://medium.com/@sj.anyway/asynchronous-programming-in-java-with-completablefuture-2e6d7a6d43e0
+// Combines the result of future1 and future2.
+// future1 and future2 are independent
 @Slf4j
-public class ThenCombineTest {
+class ThenCombineTest {
 
-    public static void main(String[] args) {
+    public static void main() {
         CompletableFuture<String> future1 = CompletableFuture.supplyAsync(() -> "Hello, ");
         CompletableFuture<String> future2 = CompletableFuture.supplyAsync(() -> "CompletableFuture!");
 

@@ -5,14 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-/**
- * See <a href="https://medium.com/@suveshagnihotri/asynchronous-programming-in-java-a612281c9d2f">...</a>
- * thenCompose combines two CompletableFutures sequentially, where the second CompletableFuture is dependent on the result of the first.
- */
+// See https://medium.com/@suveshagnihotri/asynchronous-programming-in-java-a612281c9d2f
+// henCompose combines two CompletableFutures sequentially, where the second CompletableFuture is dependent on the result of the first.
 @Slf4j
-public class ThenComposeTest {
+class ThenComposeTest {
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    public static void main() throws ExecutionException, InterruptedException {
         // Fetch Quotation
         CompletableFuture<String> quotation = CompletableFuture.supplyAsync(() -> {
             log.info("quotation");

@@ -6,16 +6,16 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-/**
- * See <a href="https://medium.com/@suveshagnihotri/asynchronous-programming-in-java-a612281c9d2f">...</a>
- * thenApply to apply a function on the result of the previous CompletableFuture
- */
-@Slf4j
-public class ThenApplyTest {
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+// See href="https://medium.com/@suveshagnihotri/asynchronous-programming-in-java-a612281c9d2f
+// thenApply to apply a function on the result of the previous CompletableFuture
+
+@Slf4j
+class ThenApplyTest {
+
+    public static void main() throws ExecutionException, InterruptedException {
         // Fetch Quotation
-        CompletableFuture<String> quotation = CompletableFuture.supplyAsync(() -> {
+        CompletableFuture<String> quotation = java.util.concurrent.CompletableFuture.supplyAsync(() -> {
             // commonPool-worker-1
             log.info("quotation");
             return "getQuotation()";
