@@ -15,7 +15,7 @@ import java.nio.file.Paths;
 @Slf4j
 class ResourceLoadingWithClassLoaderTest {
 
-    public static void main(String[] args) throws Exception {
+    public static void main() throws Exception {
         URL resourceUrl = ResourceLoadingWithClassLoaderTest.class.getClassLoader().getResource("test.bat");
         absolutePath(resourceUrl);
     }
