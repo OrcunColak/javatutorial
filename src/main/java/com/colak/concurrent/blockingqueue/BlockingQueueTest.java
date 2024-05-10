@@ -50,7 +50,7 @@ class BlockingQueueTest {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main() {
         // We need to give a capacity
         BlockingQueue<Integer> queue = new ArrayBlockingQueue<>(10);
 

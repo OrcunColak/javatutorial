@@ -9,7 +9,7 @@ class AtomicLongTest {
 
     AtomicLong atomicLong = new AtomicLong();
 
-    public static void main(String[] args) {
+    public static void main() {
         AtomicLongTest atomicLongTest = new AtomicLongTest();
         atomicLongTest.addAndGet();
     }
