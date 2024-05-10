@@ -1,11 +1,13 @@
 package com.colak.concurrent.blockingqueue;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 @Slf4j
+@UtilityClass
 class BlockingQueueTest {
 
     static class Producer implements Runnable {
