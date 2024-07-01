@@ -4,11 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.TimeUnit;
 
-/**
- * See <a href="https://medium.com/@reetesh043/understanding-the-difference-between-wait-and-sleep-methods-64958feffbb8">...</a>
- */
+
+// https://medium.com/@reetesh043/understanding-the-difference-between-wait-and-sleep-methods-64958feffbb8
+
 @Slf4j
-class NotifyTest {
+class ThreadNotifyTest {
 
     private static class MyWaitingThread extends Thread {
         @Override
@@ -25,7 +25,7 @@ class NotifyTest {
         }
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main() throws InterruptedException {
         MyWaitingThread thread1 = new MyWaitingThread();
         thread1.start();
 

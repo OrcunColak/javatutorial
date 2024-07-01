@@ -4,13 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.TimeUnit;
 
-/**
- * See <a href="https://hemanthcse1.medium.com/interrupts-in-java-5bfcd752fadc">...</a>
- */
-@Slf4j
-class InterruptTest {
 
-    public static void main(String[] args) throws InterruptedException {
+ // See https://hemanthcse1.medium.com/interrupts-in-java-5bfcd752fadc
+
+@Slf4j
+class ThreadInterruptTest {
+
+    public static void main() throws InterruptedException {
         Thread newThread = new Thread(() -> {
             while (!Thread.currentThread().isInterrupted()) {
                 // Long-running task
