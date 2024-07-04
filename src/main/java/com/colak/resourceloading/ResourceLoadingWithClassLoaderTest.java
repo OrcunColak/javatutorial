@@ -1,5 +1,6 @@
 package com.colak.resourceloading;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -13,10 +14,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Slf4j
+@UtilityClass
 class ResourceLoadingWithClassLoaderTest {
 
-    public static void main() throws Exception {
+    public static void main() throws URISyntaxException, IOException {
         URL resourceUrl = ResourceLoadingWithClassLoaderTest.class.getClassLoader().getResource("test.bat");
+        assert resourceUrl != null;
         absolutePath(resourceUrl);
     }
 
