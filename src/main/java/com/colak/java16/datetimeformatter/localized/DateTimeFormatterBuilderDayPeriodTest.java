@@ -1,5 +1,6 @@
-package com.colak.java16.datetime.localized;
+package com.colak.java16.datetimeformatter.localized;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
@@ -9,10 +10,9 @@ import java.time.format.TextStyle;
 import java.util.Locale;
 import java.util.Map;
 
-/**
- * See https://rathod-ajay.medium.com/a-comprehensive-journey-from-java-8-to-java-21-with-code-examples-of-essential-api-enhancements-6817d2ab3ba8
- */
+// See https://rathod-ajay.medium.com/a-comprehensive-journey-from-java-8-to-java-21-with-code-examples-of-essential-api-enhancements-6817d2ab3ba8
 @Slf4j
+@UtilityClass
 public class DateTimeFormatterBuilderDayPeriodTest {
 
     static Map<TextStyle, Locale> map = Map.of(
@@ -21,7 +21,7 @@ public class DateTimeFormatterBuilderDayPeriodTest {
             TextStyle.NARROW, Locale.FRENCH
     );
 
-    public static void main(String[] args) {
+    public static void main() {
         LocalDateTime now = LocalDateTime.now();
 
         // 2024-02-05 08:37 du matin

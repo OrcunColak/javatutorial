@@ -1,18 +1,19 @@
-package com.colak.java16.datetime.localized;
+package com.colak.java16.datetimeformatter.localized;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 
-/**
- * See <a href="https://medium.com/@mobile.prabeensoti/guide-to-data-time-formatter-in-java17-65d498f5d494">...</a>
- */
+// See <a href="https://medium.com/@mobile.prabeensoti/guide-to-data-time-formatter-in-java17-65d498f5d494
 @Slf4j
+@UtilityClass
 public class DateTimeFormatterLocalizedTest {
     private static final LocalDate localDate = LocalDate.of(2024, 1, 30);
-    public static void main(String[] args) {
+
+    public static void main() {
         localizedFormat();
     }
 
