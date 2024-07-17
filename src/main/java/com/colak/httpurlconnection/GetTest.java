@@ -3,43 +3,44 @@ package com.colak.httpurlconnection;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @UtilityClass
 public class GetTest {
 
-    public static void main() throws IOException {
-        URL url = URI.create("http://google.com").toURL();
+    public static void main() {
+        getData();
+    }
 
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        connection.setConnectTimeout(2_000);
-        // connection.setReadTimeout(2_000);
+    private static void getData() {
+        HttpURLConnection connection = null;
+        try {
+            URL url = URI.create("http://google.com").toURL();
 
-        // This call will connect to given URL
-        int responseCode = connection.getResponseCode();
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(2_000);
 
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            StringBuilder response = new StringBuilder();
+            // This call will connect to given URL
+            int responseCode = connection.getResponseCode();
 
-            try (InputStreamReader inputStreamReader = new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8);
-                 BufferedReader in = new BufferedReader(inputStreamReader)) {
-                String inputLine;
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                String response = PostTest.readInputStream(connection.getInputStream());
+                log.info(response);
+            } else {
+                log.info("GET request failed");
             }
-            log.info(response.toString());
-        } else {
-            log.info("GET request failed");
+        } catch (IOException exception) {
+            log.error("Exception : ", exception);
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
         }
-        connection.disconnect();
     }
 }
