@@ -14,7 +14,7 @@ public class StringFormatSpeedTest {
 
         // Concatenation Benchmark
         startTime = System.nanoTime();
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 100_000; i++) {
             String result = "Hello, " + name + "!";
         }
         endTime = System.nanoTime();
@@ -22,7 +22,7 @@ public class StringFormatSpeedTest {
 
         // Formatting Benchmark
         startTime = System.nanoTime();
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 100_000; i++) {
             String result = String.format("Hello, %s!", name);
         }
         endTime = System.nanoTime();
