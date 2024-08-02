@@ -6,7 +6,7 @@ import java.util.concurrent.locks.StampedLock;
 
 // See https://medium.com/itnext/optimistic-locking-with-stampedlock-in-java-f2e4d5ba35cd?source=explore---------10-109--------------------9004247a_66a9_4df0_b411_e13f010b11fd-------15
 @Slf4j
-public class SharedStoreTest {
+class SharedStoreTest {
     private final StampedLock lock = new StampedLock();
     private int sharedData = 0;
 

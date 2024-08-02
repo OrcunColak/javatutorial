@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.locks.StampedLock;
 
 @Slf4j
-public class StampedLockTest {
+class StampedLockTest {
 
     private double x;
     private double y;
