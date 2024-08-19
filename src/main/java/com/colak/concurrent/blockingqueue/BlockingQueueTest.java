@@ -20,7 +20,7 @@ class BlockingQueueTest {
         public void run() {
             try {
                 for (int i = 0; i < 10; i++) {
-                    log.info("Produced: " + i);
+                    log.info("Produced: {}", i);
                     queue.put(i); // Waits if necessary for space to become available
                     Thread.sleep(100); // Simulate time passing
                 }
@@ -41,7 +41,7 @@ class BlockingQueueTest {
             try {
                 while (true) {
                     Integer take = queue.take(); // Waits if necessary until an element becomes available
-                    log.info("Consumed: " + take);
+                    log.info("Consumed: {}", take);
                     if (take == 9) { // Condition to break the loop
                         break;
                     }
