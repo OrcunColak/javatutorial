@@ -9,7 +9,6 @@ import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 
 @UtilityClass
@@ -45,9 +44,11 @@ class MulticastSendTest {
     }
 
     private static DatagramPacket getDatagramPacket(byte[] data, InetAddress group, int multicastPort) {
-        int msgSize = data.length;
-        ByteBuffer byteBuffer = ByteBuffer.allocate(1 + 4 + msgSize);
-        byteBuffer.order(ByteOrder.BIG_ENDIAN);
+        int msgSize = data.length + 4;
+        ByteBuffer byteBuffer = ByteBuffer.allocate(msgSize);
+
+        // Write data length
+        byteBuffer.putInt(data.length);
         byteBuffer.put(data);
         byte[] packetData = byteBuffer.array();
 

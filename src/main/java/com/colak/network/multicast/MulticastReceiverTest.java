@@ -1,5 +1,6 @@
 package com.colak.network.multicast;
 
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -8,9 +9,11 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
+@UtilityClass
 public class MulticastReceiverTest {
 
     private static final String MULTICAST_GROUP = "224.0.0.219"; // Multicast IP address
@@ -41,7 +44,19 @@ public class MulticastReceiverTest {
             // Listen for messages
             while (true) {
                 multicastSocket.receive(packet);
-                String message = new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
+                // Wrap data from the packet as ByteBuffer
+                byte[] receivedData = packet.getData();
+                ByteBuffer byteBuffer = ByteBuffer.wrap(receivedData, 0, packet.getLength());
+
+                // Read the data length
+                int dataLength = byteBuffer.getInt();
+
+                // Extract the data
+                byte[] data = new byte[dataLength];
+                byteBuffer.get(data);
+
+                // Convert to String
+                String message = new String(data, StandardCharsets.UTF_8);
                 log.info("Received message: {}", message);
             }
         } catch (IOException exception) {
