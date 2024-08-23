@@ -1,4 +1,4 @@
-package com.colak.concurrent.weakreference;
+package com.colak.concurrent.reference.weakreference;
 
 import lombok.extern.slf4j.Slf4j;
 
