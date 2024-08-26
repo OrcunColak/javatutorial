@@ -22,7 +22,7 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 class HttpClientGetTest {
 
-    public static void main(String[] args) throws Exception {
+    public static void main() throws Exception {
         HttpClientGetTest httpClientGetTest = new HttpClientGetTest();
         httpClientGetTest.getExample();
         httpClientGetTest.getAsyncExample();
