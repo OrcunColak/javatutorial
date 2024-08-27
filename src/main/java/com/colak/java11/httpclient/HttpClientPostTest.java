@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 class HttpClientPostTest {
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main() throws InterruptedException {
 
         HttpClientPostTest httpClientPostTest = new HttpClientPostTest();
         httpClientPostTest.postExample();
@@ -20,7 +20,7 @@ class HttpClientPostTest {
     }
 
     // See https://medium.com/@satyendra.jaiswal/webhooks-and-asynchronous-apis-real-time-communication-patterns-b6dee06b855d
-    private void postExample() throws IOException, InterruptedException {
+    private void postExample() throws InterruptedException {
         String url = "https://example.com/webhook/subscribe";
         String payload = "{\"event\": \"user_subscription\", \"user\": \"john_doe\"}";
 
@@ -33,7 +33,9 @@ class HttpClientPostTest {
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            log.info("Webhook response code: " + response.statusCode());
+            log.info("Webhook response code: {}", response.statusCode());
+        } catch (IOException exception) {
+            log.error("Exception :", exception);
         }
     }
 
@@ -56,7 +58,7 @@ class HttpClientPostTest {
                     log.info("Subscription successful");
 
                 } else {
-                    log.error("Failed. Status code: " + response.statusCode());
+                    log.error("Failed. Status code: {}", response.statusCode());
                 }
             }).join(); // Blocking, used for demonstration purposes
         }

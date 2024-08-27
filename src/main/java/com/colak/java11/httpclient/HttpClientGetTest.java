@@ -22,7 +22,7 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 class HttpClientGetTest {
 
-    public static void main() throws Exception {
+    public static void main() throws InterruptedException {
         HttpClientGetTest httpClientGetTest = new HttpClientGetTest();
         httpClientGetTest.getExample();
         httpClientGetTest.getAsyncExample();
@@ -31,7 +31,7 @@ class HttpClientGetTest {
     }
 
 
-    private void getExample() throws IOException, InterruptedException {
+    private void getExample() throws InterruptedException {
         try (HttpClient client = HttpClient.newHttpClient()) {
 
             HttpRequest request = HttpRequest.newBuilder()
@@ -41,6 +41,8 @@ class HttpClientGetTest {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             log.info("Response Code: {}", response.statusCode());
             log.info("Response Body: {}", response.body());
+        } catch (IOException exception) {
+            log.error("Exception :" , exception);
         }
     }
 
@@ -61,7 +63,7 @@ class HttpClientGetTest {
         }
     }
 
-    private void getWithConnectionTimeoutExample() throws IOException, InterruptedException {
+    private void getWithConnectionTimeoutExample() throws InterruptedException {
         try (HttpClient client = HttpClient.newBuilder()
                 .connectTimeout(java.time.Duration.ofSeconds(10))
                 .build()) {
@@ -72,10 +74,12 @@ class HttpClientGetTest {
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             log.info(response.body());
+        } catch (IOException exception) {
+            log.error("Exception :" , exception);
         }
     }
 
-    private void getWithRequestTimeoutExample() throws IOException, InterruptedException {
+    private void getWithRequestTimeoutExample() throws InterruptedException {
         try (HttpClient client = HttpClient.newBuilder()
                 .build()) {
 
@@ -88,6 +92,8 @@ class HttpClientGetTest {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             log.info("Response Code: {}", response.statusCode());
             log.info("Response Body: {}", response.body());
+        } catch (IOException exception) {
+            log.error("Exception :" , exception);
         }
     }
 }

@@ -11,12 +11,12 @@ import java.net.http.HttpResponse;
 @Slf4j
 class HttpClientHeadTest {
 
-    public static void main(String[] args) throws Exception {
+    public static void main() throws InterruptedException {
         HttpClientHeadTest httpClientHeadTest = new HttpClientHeadTest();
         httpClientHeadTest.headExample();
     }
 
-    private void headExample() throws IOException, InterruptedException {
+    private void headExample() throws InterruptedException {
         try (HttpClient client = HttpClient.newHttpClient()) {
 
             HttpRequest request = HttpRequest.newBuilder()
@@ -26,6 +26,8 @@ class HttpClientHeadTest {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             log.info("Response Code: {}", response.statusCode());
             log.info("Response Body: {}", response.body());
+        } catch (IOException exception) {
+            log.error("Exception :", exception);
         }
     }
 }
