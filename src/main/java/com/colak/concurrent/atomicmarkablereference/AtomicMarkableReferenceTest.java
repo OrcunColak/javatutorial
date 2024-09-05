@@ -15,12 +15,12 @@ public class AtomicMarkableReferenceTest {
         boolean initialMark = false;
 
         // Create AtomicMarkableReference
-        AtomicMarkableReference<String> atomicMarkableRef = new AtomicMarkableReference<>(initialRef, initialMark);
+        AtomicMarkableReference<String> atomicMarkableReference = new AtomicMarkableReference<>(initialRef, initialMark);
 
         // Thread 1: Attempts to update the reference and mark
         Thread thread1 = new Thread(() -> {
             boolean[] markHolder = new boolean[1];
-            String currentRef = atomicMarkableRef.get(markHolder);
+            String currentRef = atomicMarkableReference.get(markHolder);
             boolean currentMark = markHolder[0];
 
             log.info("Thread 1 - Current Ref: {}, Current Mark: {}", currentRef, currentMark);
@@ -34,22 +34,22 @@ public class AtomicMarkableReferenceTest {
             }
 
             // Attempt to update the reference and mark
-            boolean success = atomicMarkableRef.compareAndSet(currentRef, "Thread 1 Value", currentMark, true);
+            boolean success = atomicMarkableReference.compareAndSet(currentRef, "Thread 1 Value", currentMark, true);
             log.info("Thread 1 - Was Update Successful? {}", success);
         });
 
         // Thread 2: Performs an update on the reference and mark
         Thread thread2 = new Thread(() -> {
             boolean[] markHolder = new boolean[1];
-            String currentRef = atomicMarkableRef.get(markHolder);
+            String currentRef = atomicMarkableReference.get(markHolder);
             boolean currentMark = markHolder[0];
 
             log.info("Thread 2 - Current Ref: {}, Current Mark: {}", currentRef, currentMark);
 
             // Simulate some work
-            atomicMarkableRef.compareAndSet(currentRef, "Thread 2 Value", currentMark, true);
+            atomicMarkableReference.compareAndSet(currentRef, "Thread 2 Value", currentMark, true);
 
-            log.info("Thread 2 - Updated Ref: {}, Updated Mark: {}", atomicMarkableRef.getReference(), atomicMarkableRef.isMarked());
+            log.info("Thread 2 - Updated Ref: {}, Updated Mark: {}", atomicMarkableReference.getReference(), atomicMarkableReference.isMarked());
         });
 
         // Start both threads
@@ -62,7 +62,7 @@ public class AtomicMarkableReferenceTest {
 
         // Final state
         boolean[] finalMarkHolder = new boolean[1];
-        String finalRef = atomicMarkableRef.get(finalMarkHolder);
+        String finalRef = atomicMarkableReference.get(finalMarkHolder);
         boolean finalMark = finalMarkHolder[0];
         log.info("Final Ref: {}, Final Mark: {}", finalRef, finalMark);
     }
