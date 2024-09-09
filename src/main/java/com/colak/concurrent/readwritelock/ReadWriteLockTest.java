@@ -11,7 +11,7 @@ class ReadWriteLockTest {
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
     private int balance = 0;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main() throws InterruptedException {
         ReadWriteLockTest readWriteLockTest = new ReadWriteLockTest();
         readWriteLockTest.testLock();
     }

@@ -13,7 +13,7 @@ class ReentrantLockTest {
     private final ReentrantLock lock = new ReentrantLock(true);
     private int balance = 100;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main() throws InterruptedException {
         ReentrantLockTest readWriteLockTest = new ReentrantLockTest();
         readWriteLockTest.testLock();
     }

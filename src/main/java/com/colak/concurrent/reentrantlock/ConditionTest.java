@@ -12,7 +12,7 @@ public class ConditionTest {
     private int balance = 0;
     private final Condition transactionCondition = lock.newCondition();
 
-    public static void main(String[] args) throws Exception {
+    public static void main() throws Exception {
         ConditionTest conditionTest = new ConditionTest();
         conditionTest.testLock();
     }
