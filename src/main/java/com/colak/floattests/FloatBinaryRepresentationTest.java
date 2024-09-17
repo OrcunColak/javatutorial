@@ -3,6 +3,7 @@ package com.colak.floattests;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
+// See https://dzone.com/articles/understanding-floating-points-number-in-java
 @Slf4j
 @UtilityClass
 class FloatBinaryRepresentationTest {
