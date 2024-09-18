@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @UtilityClass
-public class MulticastReceiverTest {
+class MulticastReceiverTest {
 
     private static final String MULTICAST_GROUP = "224.0.0.219"; // Multicast IP address
     private static final int MULTICAST_PORT = 53535; // Port to listen on
