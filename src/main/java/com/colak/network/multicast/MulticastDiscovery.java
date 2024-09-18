@@ -1,21 +1,45 @@
 package com.colak.network.multicast;
 
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
-import java.nio.charset.StandardCharsets;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class MulticastDiscovery {
+@Slf4j
+@UtilityClass
+class MulticastDiscovery {
 
     private static final String MULTICAST_GROUP_ADDRESS = "230.0.0.0"; // Multicast group address
     private static final int MULTICAST_PORT = 4446; // Port for multicast messages
     private static final int BUFFER_SIZE = 1024;
 
-    public static void main(String[] args) {
+    // Unique ID for the sender (e.g., could be UUID or hostname)
+    private static final String SENDER_ID = UUID.randomUUID().toString();
+
+    private static MulticastSocket socket;
+    private static InetAddress group;
+
+    public record DiscoveryMessage(String senderId, String messageContent) {
+    }
+
+    public static void main() throws IOException {
+
+        createMulticastSocket();
+
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(2);
 
         // Start receiving messages
@@ -23,48 +47,102 @@ public class MulticastDiscovery {
 
         // Start sending discovery messages
         executor.scheduleAtFixedRate(MulticastDiscovery::sendMulticastMessage, 0, 5, TimeUnit.SECONDS);
+
+        // Add shutdown hook
+        Runtime.getRuntime().addShutdownHook(new Thread(MulticastDiscovery::shutdown));
     }
 
-    // Method to send a multicast message
-    private static void sendMulticastMessage() {
-        try (MulticastSocket socket = new MulticastSocket()) {
-            InetAddress group = InetAddress.getByName(MULTICAST_GROUP_ADDRESS);
-            String message = "Hello, this is a discovery message from " + InetAddress.getLocalHost().getHostName();
-            byte[] buffer = message.getBytes(StandardCharsets.UTF_8);
+    private static void shutdown() {
+        try {
 
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, MULTICAST_PORT);
-            socket.send(packet);
-
-            System.out.println("Sent multicast message: " + message);
+            if (socket != null) {
+                try {
+                    socket.leaveGroup(group);
+                } catch (SocketException e) {
+                    System.err.println("Error leaving group: " + e.getMessage());
+                }
+            }
+            if (!socket.isClosed()) {
+                socket.close();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    private static void createMulticastSocket() throws IOException {
+        socket = new MulticastSocket(MULTICAST_PORT);
+        group = InetAddress.getByName(MULTICAST_GROUP_ADDRESS);
+
+        // Get the network interface
+        InetAddress byName = InetAddress.getByName("0.0.0.0");
+        NetworkInterface networkInterface = NetworkInterface.getByInetAddress(byName);
+        InetSocketAddress multicastAddress = new InetSocketAddress(group, MULTICAST_PORT);
+        // Join the multicast group
+        socket.joinGroup(multicastAddress, networkInterface);
+    }
+
+    // Method to send a multicast message
+    private static void sendMulticastMessage() {
+        try {
+            // Create a DiscoveryMessage object
+            DiscoveryMessage message = new DiscoveryMessage(SENDER_ID, "Hello, this is a discovery message!");
+
+            // Serialize the message object to a byte array
+            byte[] buffer = serialize(message);
+
+            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, group, MULTICAST_PORT);
+            socket.send(packet);
+
+            log.info("Sent multicast message: {}", message);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+
     // Method to receive multicast messages
     private static void receiveMulticastMessages() {
-        byte[] buffer = new byte[BUFFER_SIZE];
-        try (MulticastSocket socket = new MulticastSocket(MULTICAST_PORT)) {
-            InetAddress group = InetAddress.getByName(MULTICAST_GROUP_ADDRESS);
-            InetAddress localHost = InetAddress.getLocalHost(); // Get the address of the local machine
-
-            socket.joinGroup(group);
-
+        try {
+            byte[] buffer = new byte[BUFFER_SIZE];
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
             socket.receive(packet);
 
-            // Check if the message is from the local machine
-            if (!packet.getAddress().equals(localHost)) {
-                String receivedMessage = new String(packet.getData(), 0, packet.getLength(), StandardCharsets.UTF_8);
-                System.out.println("Received multicast message: " + receivedMessage + " from " + packet.getAddress());
-            } else {
-                // Ignore message from self
-                System.out.println("Received own multicast message, ignoring.");
-            }
+            // Deserialize the byte array into a DiscoveryMessage object
+            DiscoveryMessage receivedMessage = deserialize(packet.getData());
 
-            socket.leaveGroup(group);
-        } catch (IOException e) {
-            e.printStackTrace();
+            // Ignore message from self
+            if (!SENDER_ID.equals(receivedMessage.senderId())) {
+                log.info("Received multicast message: {}", receivedMessage);
+            }
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    // Helper method to serialize an object to a byte array
+    private static byte[] serialize(DiscoveryMessage message) throws IOException {
+        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        try (DataOutputStream dataStream = new DataOutputStream(byteStream)) {
+            // Write senderId
+            dataStream.writeUTF(message.senderId());
+
+            // Write messageContent
+            dataStream.writeUTF(message.messageContent());
+        }
+        return byteStream.toByteArray();
+    }
+
+    // Helper method to deserialize a byte array back into a DiscoveryMessage object
+    private static DiscoveryMessage deserialize(byte[] bytes) throws IOException {
+        ByteArrayInputStream byteStream = new ByteArrayInputStream(bytes);
+        try (DataInputStream dataStream = new DataInputStream(byteStream)) {
+            // Read senderId
+            String senderId = dataStream.readUTF();
+
+            // Read messageContent
+            String messageContent = dataStream.readUTF();
+
+            return new DiscoveryMessage(senderId, messageContent);
         }
     }
 }
