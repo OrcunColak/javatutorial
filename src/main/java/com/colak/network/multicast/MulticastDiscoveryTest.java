@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @UtilityClass
-class MulticastDiscovery {
+class MulticastDiscoveryTest {
 
     private static final String MULTICAST_GROUP_ADDRESS = "230.0.0.0"; // Multicast group address
     private static final int MULTICAST_PORT = 4446; // Port for multicast messages
@@ -32,6 +32,8 @@ class MulticastDiscovery {
 
     private static MulticastSocket socket;
     private static InetAddress group;
+    private static InetSocketAddress multicastAddress;
+    private static NetworkInterface networkInterface;
 
     public record DiscoveryMessage(String senderId, String messageContent) {
     }
@@ -43,30 +45,32 @@ class MulticastDiscovery {
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(2);
 
         // Start receiving messages
-        executor.scheduleAtFixedRate(MulticastDiscovery::receiveMulticastMessages, 0, 1, TimeUnit.SECONDS);
+        executor.scheduleAtFixedRate(MulticastDiscoveryTest::receiveMulticastMessages, 0, 1, TimeUnit.SECONDS);
 
         // Start sending discovery messages
-        executor.scheduleAtFixedRate(MulticastDiscovery::sendMulticastMessage, 0, 5, TimeUnit.SECONDS);
+        executor.scheduleAtFixedRate(MulticastDiscoveryTest::sendMulticastMessage, 0, 5, TimeUnit.SECONDS);
 
         // Add shutdown hook
-        Runtime.getRuntime().addShutdownHook(new Thread(MulticastDiscovery::shutdown));
+        Runtime.getRuntime().addShutdownHook(new Thread(MulticastDiscoveryTest::shutdown));
     }
 
     private static void shutdown() {
         try {
 
             if (socket != null) {
-                try {
-                    socket.leaveGroup(group);
-                } catch (SocketException e) {
-                    System.err.println("Error leaving group: " + e.getMessage());
-                }
-            }
-            if (!socket.isClosed()) {
+                leaveGroup();
                 socket.close();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            log.error("Exception during shutdown: ", exception);
+        }
+    }
+
+    private static void leaveGroup() throws IOException {
+        try {
+            socket.leaveGroup(multicastAddress, networkInterface);
+        } catch (SocketException exception) {
+            log.error("Error leaving group: ", exception);
         }
     }
 
@@ -76,8 +80,8 @@ class MulticastDiscovery {
 
         // Get the network interface
         InetAddress byName = InetAddress.getByName("0.0.0.0");
-        NetworkInterface networkInterface = NetworkInterface.getByInetAddress(byName);
-        InetSocketAddress multicastAddress = new InetSocketAddress(group, MULTICAST_PORT);
+        networkInterface = NetworkInterface.getByInetAddress(byName);
+        multicastAddress = new InetSocketAddress(group, MULTICAST_PORT);
         // Join the multicast group
         socket.joinGroup(multicastAddress, networkInterface);
     }
@@ -96,7 +100,7 @@ class MulticastDiscovery {
 
             log.info("Sent multicast message: {}", message);
         } catch (IOException exception) {
-            exception.printStackTrace();
+            log.error("Exception during sendMulticastMessage: ", exception);
         }
     }
 
@@ -115,7 +119,7 @@ class MulticastDiscovery {
                 log.info("Received multicast message: {}", receivedMessage);
             }
         } catch (IOException exception) {
-            exception.printStackTrace();
+            log.error("Exception during receiveMulticastMessages: ", exception);
         }
     }
 
