@@ -58,8 +58,9 @@ public class ExecutorServiceSocketServer implements AutoCloseable {
     private void handleClient(Socket clientSocket) {
         try (clientSocket;
              ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream())) {
+
             User receivedUser = (User) in.readObject();
-            log.info("Received User object: " + receivedUser);
+            log.info("Received User object: {}", receivedUser);
         } catch (IOException | ClassNotFoundException exception) {
             log.error("Exception caught ", exception);
         }

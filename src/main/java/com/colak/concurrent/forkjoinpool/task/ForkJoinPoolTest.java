@@ -1,4 +1,4 @@
-package com.colak.concurrent.forkjoinpool;
+package com.colak.concurrent.forkjoinpool.task;
 
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
@@ -30,10 +30,13 @@ public class ForkJoinPoolTest {
             if (n <= 1) {
                 return n;
             }
-            FibonacciTask f1 = new FibonacciTask(n - 1);
-            FibonacciTask f2 = new FibonacciTask(n - 2);
-            f1.fork();
-            return f2.compute() + f1.join();
+            FibonacciTask leftTask = new FibonacciTask(n - 1);
+            FibonacciTask rightTask = new FibonacciTask(n - 2);
+            leftTask.fork();
+
+            Integer rightResult = rightTask.compute();
+            int leftResult = leftTask.join();
+            return leftResult + rightResult;
         }
     }
 }
