@@ -20,7 +20,7 @@ class StreamGroupByTest {
             new Employee("Jane Smith", "dept2", "F", 2)
     );
 
-    public static void main(String[] args) {
+    public static void main() {
         StreamGroupByTest test = new StreamGroupByTest();
         test.groupByAttribute();
         test.countByAttribute();
@@ -56,7 +56,7 @@ class StreamGroupByTest {
         Map<String, String> namesByDepartment =
                 employees.stream()
                         .collect(Collectors.groupingBy(Employee::department,
-                                Collectors.reducing("", Employee::name, (s1, s2) -> STR."\{s1}, \{s2}")));
+                                Collectors.reducing("", Employee::name, (s1, s2) -> String.format("%s %s", s1, s2))));
         log.info("reduceByAttribute : {}", namesByDepartment);
     }
 

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Gatherers;
 
 
-
 // See https://levelup.gitconnected.com/java-22-explaining-new-features-with-examples-7fb2571188c8"
 @Slf4j
 class StreamGatherersTest {
@@ -27,7 +26,7 @@ class StreamGatherersTest {
                 .findFirst()
                 .orElseThrow();
         // 15
-        log.info(STR."Fold \{fold}");
+        log.info("Fold {}", fold);
     }
 
     // mapConcurrent is a stateful one-to-one gatherer which invokes a supplied function for each input element concurrently, up to a supplied limit.
@@ -38,7 +37,7 @@ class StreamGatherersTest {
                 .gather(Gatherers.mapConcurrent(4, a -> a * 2))
                 .toList();
         //[2, 4, 6, 8, 10]
-        log.info(STR."MapConcurrent \{mapConcurrent}");
+        log.info("MapConcurrent {}", mapConcurrent);
     }
 
 
@@ -52,7 +51,7 @@ class StreamGatherersTest {
                 .gather(Gatherers.windowSliding(3))
                 .toList();
         // [[1, 2, 3], [2, 3, 4], [3, 4, 5]]
-        log.info(STR."SlidingWindow \{slidingWindows}");
+        log.info("SlidingWindow {}", slidingWindows);
     }
 
     // windowFixed is a stateful many-to-many gatherer which groups input elements into lists of a supplied size,
@@ -64,6 +63,6 @@ class StreamGatherersTest {
                 .toList();
 
         // [[0, 1, 2], [3, 4, 5]]
-        log.info(STR."fixedWindow \{fixedWindows}");
+        log.info("fixedWindow {}", fixedWindows);
     }
 }

@@ -16,9 +16,7 @@ public class DecoratorLambdaTest {
     }
 
     private static EmailSender getEmailSender() {
-        EmailSender basicSender = (recipient, message) -> {
-            log.info("Sending email to {} : {}", recipient, message);
-        };
+        EmailSender basicSender = (recipient, message) -> log.info("Sending email to {} : {}", recipient, message);
 
         // Adding logging feature
         EmailSender loggedSender = (recipient, message) -> {
@@ -33,15 +31,14 @@ public class DecoratorLambdaTest {
         };
 
         // Adding signature feature
-        EmailSender signedSender = (recipient, message) -> {
-            String signedMessage = STR."""
-            \{message}
+        return (recipient, message) -> {
+            String signedMessage = String.format("""
+                    %s
 
-            Best regards,
-            E-Commerce Team""";
+                    Best regards,
+                    E-Commerce Team""", message);
             log.info("Adding signature to message for {}", recipient);
             encryptedSender.send(recipient, signedMessage);
         };
-        return signedSender;
     }
 }

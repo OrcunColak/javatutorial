@@ -1,4 +1,4 @@
-package com.colak.java17;
+package com.colak.java23.instanceoftest;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,6 +18,8 @@ class InstanceOfTest {
     private static boolean stringMap(Object object) {
         boolean result = false;
         if (object instanceof Map<?, ?> stringMap) {
+            result = true;
+        } else if (object instanceof Integer integer) {
             result = true;
         }
         return result;

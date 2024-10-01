@@ -61,11 +61,11 @@ class CustomGathererTest {
     private static void fold() {
         List<Integer> numbers = List.of(1, 2, 3, 4, 5);
 
-        List<Integer>  list = numbers.stream()
+        List<Integer> list = numbers.stream()
                 .gather(new LargestInt(10))
                 .toList();
         // 5
-        log.info(STR."List \{list}");
+        log.info("List : {}", list);
     }
 
 }
