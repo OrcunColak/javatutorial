@@ -6,9 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.net.InetSocketAddress;
 import java.nio.file.Path;
 
-/**
- * See <a href="https://rathod-ajay.medium.com/a-comprehensive-journey-from-java-8-to-java-21-with-code-examples-of-essential-api-enhancements-6817d2ab3ba8">...</a>
- */
+
+// https://rathod-ajay.medium.com/a-comprehensive-journey-from-java-8-to-java-21-with-code-examples-of-essential-api-enhancements-6817d2ab3ba8
 @Slf4j
 public class HttpServerTest {
 
