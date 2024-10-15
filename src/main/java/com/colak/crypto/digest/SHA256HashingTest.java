@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
 
 @Slf4j
 @UtilityClass
-public class SHA256Hashing {
+public class SHA256HashingTest {
 
     public static void main() {
         String input = "password";

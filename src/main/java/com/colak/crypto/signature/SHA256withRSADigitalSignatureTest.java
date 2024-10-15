@@ -12,7 +12,7 @@ import java.security.Signature;
 
 @Slf4j
 @UtilityClass
-public class SHA256withRSATest {
+public class SHA256withRSADigitalSignatureTest {
 
     public static void main() throws Exception {
         KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");

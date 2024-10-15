@@ -7,7 +7,7 @@ import java.util.zip.CRC32;
 
 @Slf4j
 @UtilityClass
-public class CRC32Hashing {
+public class CRC32HashingTest {
 
     public static void main() {
         String input = "password";
