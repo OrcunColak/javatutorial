@@ -12,6 +12,7 @@ import java.net.NetworkInterface;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 
+// See https://stackoverflow.com/questions/19392173/multicastsocket-constructors-and-binding-to-port-or-socketaddress
 @Slf4j
 @UtilityClass
 class MulticastReceiverTest {
@@ -24,7 +25,12 @@ class MulticastReceiverTest {
     }
 
     private static void receiveMulticast() {
+
+        // Creates a multicast socket bound to a specific port but on to ALL network cards.
         try (MulticastSocket multicastSocket = new MulticastSocket(MULTICAST_PORT)) {
+
+            multicastSocket.setReuseAddress(true);
+            multicastSocket.setSoTimeout(5000);
 
             // Get the network interface
             InetAddress byName = InetAddress.getByName("0.0.0.0");
