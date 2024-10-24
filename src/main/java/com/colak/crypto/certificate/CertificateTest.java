@@ -10,6 +10,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.util.Collection;
 
+// CertificateFactory can read certificates
 @Slf4j
 @UtilityClass
 class CertificateTest {
@@ -31,11 +32,10 @@ class CertificateTest {
 
     public static void main() throws CertificateException {
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(CERT_MULTI_CN);
-        CertificateFactory cf = CertificateFactory.getInstance("X.509");
-        Collection<? extends Certificate> certificates = cf.generateCertificates(byteArrayInputStream);
+        CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
+        Collection<? extends Certificate> certificates = certificateFactory.generateCertificates(byteArrayInputStream);
         for (Certificate certificate : certificates) {
             log.info(certificate.toString());
         }
-
     }
 }
