@@ -8,14 +8,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
-/**
- * See <a href="https://blog.stackademic.com/unveiling-the-power-of-virtual-threads-in-java-a-deep-dive-0c96fe50a3cb">...</a>
- */
+// See https://blog.stackademic.com/unveiling-the-power-of-virtual-threads-in-java-a-deep-dive-0c96fe50a3cb
 @Slf4j
-public class VirtualThreadCompletableFutureTest {
+class VirtualThreadCompletableFutureTest {
 
-
-    public static void main(String[] args) throws InterruptedException {
+    public static void main() throws InterruptedException {
 
         ThreadFactory factory = Thread.ofVirtual().name("virtual", 1).factory();
         try (ExecutorService myExecutor = Executors.newThreadPerTaskExecutor(factory)) {

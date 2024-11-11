@@ -5,13 +5,15 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
-/**
- * See <a href="https://blog.stackademic.com/unveiling-the-power-of-virtual-threads-in-java-a-deep-dive-0c96fe50a3cb">...</a>
- */
-@Slf4j
-public class VirtualThreadReentrantLockTest {
+// See https://blog.stackademic.com/unveiling-the-power-of-virtual-threads-in-java-a-deep-dive-0c96fe50a3cb
 
-    public static void main(String[] args) throws InterruptedException {
+// See https://medium.com/@phil_3582/java-virtual-threads-some-early-gotchas-to-look-out-for-f65df1bad0db
+// Any libraries used by virtual threads might use synchronized methods or synchronized blocks around long IO operations.
+// If so, this will pin the virtual threads to their carrier threads during the IO operations thereby limiting any performance advantage. You might be able to work around this but ultimately synchronized methods and blocks should be replaced with ReentrantLock. This has already been done in the Java libraries but there are still thousands of third party libraries which may have this problem.
+@Slf4j
+class VirtualThreadReentrantLockTest {
+
+    public static void main() throws InterruptedException {
         ReentrantLock lock = new ReentrantLock();
 
         Runnable task = () -> {

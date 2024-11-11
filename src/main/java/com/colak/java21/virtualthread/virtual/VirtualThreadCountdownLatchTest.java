@@ -5,13 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-/**
- * See <a href="https://blog.stackademic.com/unveiling-the-power-of-virtual-threads-in-java-a-deep-dive-0c96fe50a3cb">...</a>
- */
+// See https://blog.stackademic.com/unveiling-the-power-of-virtual-threads-in-java-a-deep-dive-0c96fe50a3cb
 @Slf4j
-public class VirtualThreadCountdownLatchTest {
+class VirtualThreadCountdownLatchTest {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main() throws InterruptedException {
 
         int numberOfThreads = 2;
         CountDownLatch latch = new CountDownLatch(numberOfThreads);
