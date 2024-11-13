@@ -1,0 +1,29 @@
+package com.colak.vectorapi;
+
+import jdk.incubator.vector.IntVector;
+import jdk.incubator.vector.VectorSpecies;
+
+import java.util.stream.IntStream;
+
+// See https://medium.com/@sanjanarjn/java-vector-api-enhancing-speed-one-vector-at-a-time-35147b3d709f
+class VectorAddTest {
+
+    private static final VectorSpecies<Integer> species = IntVector.SPECIES_PREFERRED;
+
+    public static void main() {
+
+        int size = 1000;
+        int[] firstArray = IntStream.range(1, size + 1).toArray();
+        int[] secondArray = IntStream.range(1, size + 1).toArray();
+
+        int[] resultArray = new int[size];
+
+        var offset = 0;
+        var firstVector = IntVector.fromArray(species, firstArray, offset);
+        var secondVector = IntVector.fromArray(species, secondArray, offset);
+
+        IntVector resultVector = firstVector.add(secondVector);
+        resultVector.intoArray(resultArray, offset);
+
+    }
+}
