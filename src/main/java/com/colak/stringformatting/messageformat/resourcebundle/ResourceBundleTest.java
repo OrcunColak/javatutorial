@@ -1,4 +1,4 @@
-package com.colak.stringformatting.messageformat;
+package com.colak.stringformatting.messageformat.resourcebundle;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -6,14 +6,10 @@ import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-
-/**
- * See <a href="https://webcache.googleusercontent.com/search?q=cache:https://blog.devgenius.io/how-to-format-strings-in-java-1b016b047793">...</a>
- */
 @Slf4j
 class ResourceBundleTest {
 
-    public static void main(String[] args) {
+    public static void main() {
         Locale currentLocale = Locale.of("fr", "FR");
         ResourceBundle messages = ResourceBundle.getBundle("messages", currentLocale);
 
