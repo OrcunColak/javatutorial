@@ -1,12 +1,11 @@
 package com.colak.gof.singleton;
 
-/**
- * See <a href="https://medium.com/@amlan.117/create-thread-safe-singleton-object-in-java-f4169649fc38">...</a>
- */
+// See https://medium.com/@amlan.117/create-thread-safe-singleton-object-in-java-f4169649fc38
 public class DoubleCheckedSingleton {
     private static volatile DoubleCheckedSingleton INSTANCE;
 
-    private DoubleCheckedSingleton() {}
+    private DoubleCheckedSingleton() {
+    }
 
     public static DoubleCheckedSingleton getInstance() {
         if (INSTANCE == null) {
