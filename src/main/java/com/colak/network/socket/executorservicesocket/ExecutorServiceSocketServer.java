@@ -9,8 +9,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
+// With Blocking I/O, each client connection requires its own server thread.
+// For example, if the server has only 20 threads and all threads are busy handling client requests, new requests will
+// have to wait until a thread becomes available.
 @Slf4j
 public class ExecutorServiceSocketServer implements AutoCloseable {
 
@@ -43,12 +45,8 @@ public class ExecutorServiceSocketServer implements AutoCloseable {
             serverSocket.close();
         } catch (IOException _) {
         }
-        executors.shutdown();
-        try {
-            executors.awaitTermination(30, TimeUnit.SECONDS);
-        } catch (InterruptedException exception) {
-            Thread.currentThread().interrupt();
-        }
+        executors.close();
+
         log.info("Server stopped...");
     }
 
