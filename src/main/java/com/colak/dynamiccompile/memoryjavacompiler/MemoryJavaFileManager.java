@@ -1,4 +1,4 @@
-package com.colak.dynamiccompile;
+package com.colak.dynamiccompile.memoryjavacompiler;
 
 import lombok.Getter;
 

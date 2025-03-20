@@ -1,6 +1,6 @@
 package com.colak.classloader;
 
-import com.colak.dynamiccompile.MemoryJavaCompiler;
+import com.colak.dynamiccompile.memoryjavacompiler.MemoryJavaCompiler;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileInputStream;
