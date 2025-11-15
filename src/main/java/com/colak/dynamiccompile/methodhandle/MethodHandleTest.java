@@ -7,8 +7,15 @@ import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/// General usage to load class bytes
+/// ```
+/// MethodHandles.Lookup lookup = MethodHandles.lookup();
+/// MethodHandles.Lookup hidden = lookup.defineHiddenClass(classBytes, true);
+/// Class<?> cls = hidden.lookupClass();
+///```
 public class MethodHandleTest {
-    public static void main(String[] args) throws Throwable {
+
+    static void main() throws Throwable {
         // Step 1: Generate Java Source Code
         String className = "HiddenHello";
         String sourceCode = """

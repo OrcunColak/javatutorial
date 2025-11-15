@@ -1,4 +1,4 @@
-package com.colak.convariant.generics;
+package com.colak.covariant.generics;
 
 import lombok.extern.slf4j.Slf4j;
 

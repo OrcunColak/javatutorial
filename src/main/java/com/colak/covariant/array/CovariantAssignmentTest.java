@@ -1,4 +1,4 @@
-package com.colak.convariant.array;
+package com.colak.covariant.array;
 
 import lombok.extern.slf4j.Slf4j;
 

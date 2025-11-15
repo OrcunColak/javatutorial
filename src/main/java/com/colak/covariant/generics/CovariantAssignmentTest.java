@@ -1,4 +1,4 @@
-package com.colak.convariant.generics;
+package com.colak.covariant.generics;
 
 import java.util.Arrays;
 import java.util.List;
