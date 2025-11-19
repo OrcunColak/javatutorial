@@ -8,7 +8,7 @@ import java.util.List;
 @Slf4j
 public class MemoryJavaCompilerTest {
 
-    public static void main(String[] args) {
+    static void main() {
         try {
             // List of class names to compile
             List<String> fileNameList = List.of("AlienInvasion.java", "Starship.java");

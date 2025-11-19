@@ -10,7 +10,7 @@ import java.util.Optional;
 @Slf4j
 public class GetFirstExecutorTest {
 
-    public static void main(String[] args) {
+    static void main() {
         orElseGet();
         orElseThrow();
     }

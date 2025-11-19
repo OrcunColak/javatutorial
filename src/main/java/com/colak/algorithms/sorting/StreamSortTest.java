@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class StreamSortTest {
 
-    public static void main(String[] args) {
+    static void main() {
         ArrayList<Person> sortedList = Person.getTestList().stream()
                 .sorted(Person.getComparator())
                 .collect(Collectors.toCollection(ArrayList::new));

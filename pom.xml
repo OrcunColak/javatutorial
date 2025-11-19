@@ -14,28 +14,28 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <compilerArgs>
-                        <arg>--enable-preview</arg>
-                    </compilerArgs>
-                </configuration>
-            </plugin>
+            <!-- <plugin> -->
+            <!--     <groupId>org.apache.maven.plugins</groupId> -->
+            <!--     <artifactId>maven-compiler-plugin</artifactId> -->
+            <!--     <configuration> -->
+            <!--         <compilerArgs> -->
+            <!--             <arg>&#45;&#45;enable-preview</arg> -->
+            <!--         </compilerArgs> -->
+            <!--     </configuration> -->
+            <!-- </plugin> -->
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.0.0</version>
-                <configuration>
-                    <executable>java</executable>
-                    <arguments>
-                        <argument>--add-modules</argument>
-                        <argument>jdk.incubator.vector</argument>
-                    </arguments>
-                </configuration>
-            </plugin>
+            <!-- <plugin> -->
+            <!--     <groupId>org.codehaus.mojo</groupId> -->
+            <!--     <artifactId>exec-maven-plugin</artifactId> -->
+            <!--     <version>3.0.0</version> -->
+            <!--     <configuration> -->
+            <!--         <executable>java</executable> -->
+            <!--         <arguments> -->
+            <!--             <argument>&#45;&#45;add-modules</argument> -->
+            <!--             <argument>jdk.incubator.vector</argument> -->
+            <!--         </arguments> -->
+            <!--     </configuration> -->
+            <!-- </plugin> -->
 
         </plugins>
     </build>
@@ -51,7 +51,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.5.18</version>
+            <version>1.5.21</version>
         </dependency>
 
         <dependency>
