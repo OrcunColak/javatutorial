@@ -10,7 +10,7 @@ import java.util.stream.Gatherers;
 @Slf4j
 class StreamGatherersTest {
 
-    public static void main() {
+    static void main() {
         fold();
         mapConcurrent();
         fixedSize();
